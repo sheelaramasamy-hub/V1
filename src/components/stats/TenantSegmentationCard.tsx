@@ -1,16 +1,23 @@
-import { makeStyles, Subtitle2, tokens } from "@fluentui/react-components";
+import { makeStyles, tokens } from "@fluentui/react-components";
 import { tenantSegments } from "../../data/stats";
 import { segmentPalette } from "../../theme/chartPalette";
 import { SurfaceCard } from "../shared/SurfaceCard";
 import { DonutChart } from "./DonutChart";
 
 const useStyles = makeStyles({
-  /** Figma node 1620:1518 — 16px padding, header then chart row with 20px gap. */
   card: {
-    padding: tokens.spacingVerticalL,
+    padding: "16px",
     display: "flex",
     flexDirection: "column",
-    gap: tokens.spacingVerticalL,
+    gap: "16px",
+  },
+  title: {
+    margin: 0,
+    fontFamily: tokens.fontFamilyBase,
+    fontSize: tokens.fontSizeBase500,
+    lineHeight: tokens.lineHeightBase500,
+    fontWeight: tokens.fontWeightSemibold,
+    color: tokens.colorNeutralForeground1,
   },
   body: {
     display: "flex",
@@ -37,14 +44,12 @@ const useStyles = makeStyles({
     gap: tokens.spacingHorizontalS,
     minWidth: 0,
   },
-  /** Figma: 8x8 swatch with the 2px "Small" corner radius. */
   swatch: {
     width: "8px",
     height: "8px",
     borderRadius: tokens.borderRadiusSmall,
     flexShrink: 0,
   },
-  /** Figma: Segoe UI Regular 12/16 in colorNeutralForeground1. */
   legendText: {
     fontFamily: tokens.fontFamilyBase,
     fontSize: tokens.fontSizeBase200,
@@ -60,7 +65,7 @@ export function TenantSegmentationCard() {
 
   return (
     <SurfaceCard className={styles.card}>
-      <Subtitle2 as="h2">Tenant Segmentation</Subtitle2>
+      <h2 className={styles.title}>Tenant Segmentation</h2>
 
       <div className={styles.body}>
         <DonutChart

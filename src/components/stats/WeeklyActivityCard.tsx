@@ -1,14 +1,14 @@
-import { makeStyles, Subtitle2, tokens } from "@fluentui/react-components";
+import { makeStyles, tokens } from "@fluentui/react-components";
 import { weeklyActivity, weeklyActivitySummary } from "../../data/stats";
 import { SurfaceCard } from "../shared/SurfaceCard";
 import { BarChart } from "./BarChart";
 
 const useStyles = makeStyles({
   card: {
-    padding: tokens.spacingVerticalL,
+    padding: "16px",
     display: "flex",
     flexDirection: "column",
-    gap: tokens.spacingVerticalM,
+    gap: "16px",
   },
   header: {
     display: "flex",
@@ -20,13 +20,20 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
   },
+  title: {
+    margin: 0,
+    fontFamily: tokens.fontFamilyBase,
+    fontSize: tokens.fontSizeBase500,
+    lineHeight: tokens.lineHeightBase500,
+    fontWeight: tokens.fontWeightSemibold,
+    color: tokens.colorNeutralForeground1,
+  },
   caption: {
     fontFamily: tokens.fontFamilyBase,
     fontSize: tokens.fontSizeBase200,
     lineHeight: tokens.lineHeightBase200,
     color: tokens.colorNeutralForeground3,
   },
-  /** Figma: the running total is set larger and semibold, right-aligned. */
   total: {
     fontFamily: tokens.fontFamilyBase,
     fontSize: tokens.fontSizeBase500,
@@ -50,7 +57,7 @@ export function WeeklyActivityCard() {
     <SurfaceCard className={styles.card}>
       <div className={styles.header}>
         <div className={styles.heading}>
-          <Subtitle2 as="h2">Weekly activity</Subtitle2>
+          <h2 className={styles.title}>Weekly activity</h2>
           <span className={styles.caption}>{weeklyActivitySummary.caption}</span>
         </div>
         <span className={styles.total}>{weeklyActivitySummary.totalLabel}</span>

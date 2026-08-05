@@ -32,6 +32,13 @@ const useStyles = makeStyles({
     backgroundColor: "rgba(255, 255, 255, 0.16)",
   },
   body: {
+    height: "66px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    minWidth: 0,
+  },
+  textStack: {
     display: "flex",
     flexDirection: "column",
     gap: tokens.spacingVerticalXS,
@@ -44,6 +51,9 @@ const useStyles = makeStyles({
     fontSize: "9px",
     lineHeight: "13px",
     color: tokens.colorNeutralForeground3,
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   },
   /** Figma: Segoe UI Semibold 12/16. */
   title: {
@@ -53,6 +63,10 @@ const useStyles = makeStyles({
     lineHeight: tokens.lineHeightBase200,
     fontWeight: tokens.fontWeightSemibold,
     color: tokens.colorNeutralForeground1,
+    overflow: "hidden",
+    display: "-webkit-box",
+    WebkitLineClamp: 2,
+    WebkitBoxOrient: "vertical",
   },
   /** Figma: Segoe UI Semibold 11px in the brand foreground, with a 14px trailing icon. */
   action: {
@@ -70,6 +84,7 @@ const useStyles = makeStyles({
     fontWeight: tokens.fontWeightSemibold,
     color: tokens.colorBrandForeground1,
     borderRadius: tokens.borderRadiusSmall,
+    whiteSpace: "nowrap",
     ":hover": {
       textDecoration: "underline",
     },
@@ -92,10 +107,12 @@ export function RecommendationItem({ item }: { item: RecommendedItem }) {
       </div>
 
       <div className={styles.body}>
-        <p className={styles.meta}>
-          {item.provider} {" "}&middot;{" "}{formatDuration(item.durationMinutes)}
-        </p>
-        <h3 className={styles.title}>{item.title}</h3>
+        <div className={styles.textStack}>
+          <p className={styles.meta}>
+            {item.provider} {" "}&middot;{" "}{formatDuration(item.durationMinutes)}
+          </p>
+          <h3 className={styles.title}>{item.title}</h3>
+        </div>
         <button type="button" className={styles.action}>
           {item.actionLabel}
           <ArrowRight12Regular />
@@ -104,4 +121,3 @@ export function RecommendationItem({ item }: { item: RecommendedItem }) {
     </article>
   );
 }
-

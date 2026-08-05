@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     gap: tokens.spacingVerticalXXL,
-    padding: `${tokens.spacingVerticalXXL} ${tokens.spacingHorizontalXXXL}`,
+    padding: "16px",
     minHeight: "320px",
   },
   heading: {
@@ -95,3 +95,4 @@ export function WorkshopsSection({ workshops = [] }: { workshops?: Challenge[] }
     </SurfaceCard>
   );
 }
+

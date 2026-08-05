@@ -1,13 +1,13 @@
-import { Link, makeStyles, mergeClasses, Subtitle2, tokens } from "@fluentui/react-components";
+import { Link, makeStyles, mergeClasses, tokens } from "@fluentui/react-components";
 import { upcomingDeadlines } from "../../data/stats";
 import { SurfaceCard } from "../shared/SurfaceCard";
 
 const useStyles = makeStyles({
   card: {
-    padding: tokens.spacingVerticalL,
+    padding: "16px",
     display: "flex",
     flexDirection: "column",
-    gap: tokens.spacingVerticalM,
+    gap: "16px",
   },
   header: {
     display: "flex",
@@ -15,17 +15,24 @@ const useStyles = makeStyles({
     justifyContent: "space-between",
     gap: tokens.spacingHorizontalM,
   },
+  titleHeading: {
+    margin: 0,
+    fontFamily: tokens.fontFamilyBase,
+    fontSize: tokens.fontSizeBase500,
+    lineHeight: tokens.lineHeightBase500,
+    fontWeight: tokens.fontWeightSemibold,
+    color: tokens.colorNeutralForeground1,
+  },
   list: {
     display: "flex",
     flexDirection: "column",
-    gap: tokens.spacingVerticalM,
+    gap: tokens.spacingVerticalMNudge,
   },
   row: {
     display: "flex",
     alignItems: "center",
     gap: tokens.spacingHorizontalM,
   },
-  /** Figma: 36x40 date chip on the neutral surface. */
   dateChip: {
     flexShrink: 0,
     width: "36px",
@@ -90,7 +97,7 @@ export function UpcomingDeadlinesCard() {
   return (
     <SurfaceCard className={styles.card}>
       <div className={styles.header}>
-        <Subtitle2 as="h2">Upcoming deadlines</Subtitle2>
+        <h2 className={styles.titleHeading}>Upcoming deadlines</h2>
         <Link href="#">View all</Link>
       </div>
 

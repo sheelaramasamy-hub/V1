@@ -1,8 +1,9 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { makeStyles, tokens } from "@fluentui/react-components";
 import { TopBar } from "../components/layout/TopBar";
 import { SideNav } from "../components/navigation/SideNav";
 import { AIAssistantPanel } from "../components/ai-assistant/AIAssistantPanel";
+import { PageTransition } from "../components/shared/PageTransition";
 import { useDisclosure } from "../hooks/useDisclosure";
 import { layoutTokens } from "../theme/theme";
 
@@ -45,6 +46,7 @@ const useStyles = makeStyles({
 export function AppLayout() {
   const styles = useStyles();
   const assistant = useDisclosure();
+  const location = useLocation();
 
   return (
     <div className={styles.shell}>
@@ -53,7 +55,14 @@ export function AppLayout() {
         <SideNav />
         <main className={styles.content}>
           <div className={styles.contentInner}>
-            <Outlet />
+            {/*
+              Keyed on the path: every route lands with the same settle-in entrance, and moving
+              between pages replays it. A hash or query-only change would reuse this key on
+              purpose — that's an in-page jump, not a new destination.
+            */}
+            <PageTransition motionKey={location.pathname}>
+              <Outlet />
+            </PageTransition>
           </div>
         </main>
       </div>

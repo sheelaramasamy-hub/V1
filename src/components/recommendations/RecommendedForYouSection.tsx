@@ -4,7 +4,6 @@ import { SurfaceCard } from "../shared/SurfaceCard";
 import { RecommendationItem } from "./RecommendationItem";
 
 const useStyles = makeStyles({
-  /** Figma node 1643:54213 — 14px padding on the Shadow 08 elevation. */
   card: {
     display: "flex",
     flexDirection: "column",
@@ -17,17 +16,14 @@ const useStyles = makeStyles({
     justifyContent: "space-between",
     gap: tokens.spacingHorizontalMNudge,
   },
-  /** Figma: Segoe UI Semibold 14px with -0.14px tracking. */
   heading: {
     margin: 0,
     fontFamily: tokens.fontFamilyBase,
-    fontSize: tokens.fontSizeBase300,
-    lineHeight: tokens.lineHeightBase300,
+    fontSize: tokens.fontSizeBase500,
+    lineHeight: tokens.lineHeightBase500,
     fontWeight: tokens.fontWeightSemibold,
-    letterSpacing: "-0.14px",
     color: tokens.colorNeutralForeground1,
   },
-  /** Figma: Segoe UI Regular 10px. */
   headerLink: {
     fontSize: tokens.fontSizeBase100,
     lineHeight: tokens.lineHeightBase100,
@@ -68,4 +64,3 @@ export function RecommendedForYouSection() {
     </SurfaceCard>
   );
 }
-

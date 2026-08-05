@@ -29,5 +29,13 @@ export const layoutTokens = {
   contentPaddingInline: "40px",
   contentPaddingBlockStart: "40px",
   contentPaddingBlockEnd: "48px",
-  sectionGap: "32px",
+  sectionGap: "16px",
+  /** Height of the sticky in-page section nav on a detail page. */
+  sectionNavHeight: "44px",
+  /**
+   * Distance a section keeps from the top of the viewport when jumped to — clears the sticky top
+   * bar plus the floating section nav sitting below it.
+   */
+  sectionScrollMargin: "128px",
 } as const;
+

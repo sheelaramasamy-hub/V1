@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Badge, Button, makeStyles, tokens } from "@fluentui/react-components";
 import { ChevronRight16Regular } from "@fluentui/react-icons";
 import symbolMicrosoft from "../../assets/images/symbol-microsoft.svg";
@@ -59,7 +60,7 @@ const useStyles = makeStyles({
     width: "32px",
     height: "32px",
     borderRadius: tokens.borderRadiusMedium,
-    backgroundColor: tokens.colorNeutralBackgroundStatic,
+    backgroundColor: "#ffffff",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -116,6 +117,17 @@ const useStyles = makeStyles({
     fontWeight: tokens.fontWeightSemibold,
     color: tokens.colorBrandForeground1,
   },
+  titleLink: {
+    color: "inherit",
+    textDecorationLine: "none",
+    ":hover": {
+      textDecorationLine: "underline",
+    },
+    ":focus-visible": {
+      outline: `${tokens.strokeWidthThick} solid ${tokens.colorStrokeFocus2}`,
+      outlineOffset: tokens.spacingHorizontalXXS,
+    },
+  },
   schedule: {
     fontFamily: tokens.fontFamilyBase,
     fontSize: tokens.fontSizeBase300,
@@ -140,6 +152,22 @@ const useStyles = makeStyles({
     lineHeight: tokens.lineHeightBase200,
     color: tokens.colorNeutralForeground2,
     whiteSpace: "nowrap",
+  },
+  learnMoreButton: {
+    minWidth: "126px",
+    paddingLeft: "12px",
+    paddingRight: "12px",
+    justifyContent: "center",
+    border: `${tokens.strokeWidthThin} solid ${tokens.colorNeutralStroke1}`,
+    backgroundColor: tokens.colorNeutralBackground1,
+    ":hover": {
+      border: `${tokens.strokeWidthThin} solid ${tokens.colorNeutralStroke1Hover}`,
+      backgroundColor: tokens.colorNeutralBackground1Hover,
+    },
+  },
+  enrollButton: {
+    paddingLeft: "12px",
+    paddingRight: "12px",
   },
   footer: {
     display: "flex",
@@ -180,7 +208,13 @@ export function ChallengeCard({ challenge }: { challenge: Challenge }) {
           </div>
 
           <h3 id={`challenge-${challenge.id}`} className={styles.title}>
-            {challenge.title}
+            {challenge.detail ? (
+              <Link to={`/tracks/${challenge.id}`} className={styles.titleLink}>
+                {challenge.title}
+              </Link>
+            ) : (
+              challenge.title
+            )}
           </h3>
 
           <span className={styles.schedule}>{challenge.schedule}</span>
@@ -195,12 +229,16 @@ export function ChallengeCard({ challenge }: { challenge: Challenge }) {
         </div>
 
         <div className={styles.footer}>
-          <Button appearance="subtle" icon={<ChevronRight16Regular />} iconPosition="before">
+          <Button className={styles.learnMoreButton} appearance="subtle" icon={<ChevronRight16Regular />} iconPosition="before">
             Learn More
           </Button>
-          <Button appearance="primary">{challenge.ctaLabel}</Button>
+          <Button className={styles.enrollButton} appearance="primary">{challenge.ctaLabel}</Button>
         </div>
       </div>
     </SurfaceCard>
   );
 }
+
+
+
+
