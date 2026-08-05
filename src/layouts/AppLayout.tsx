@@ -7,18 +7,26 @@ import { useDisclosure } from "../hooks/useDisclosure";
 import { layoutTokens } from "../theme/theme";
 
 const useStyles = makeStyles({
+  /** Matches the chrome (top bar + side nav) so there's no seam at the shell's outer edge. */
   shell: {
     minHeight: "100vh",
-    backgroundColor: tokens.colorNeutralBackground3,
+    backgroundColor: tokens.colorNeutralBackground4,
   },
   body: {
     display: "flex",
     alignItems: "flex-start",
   },
-  /** Figma content frame: 40px side gutters, 40px top, generous bottom padding. */
+  /**
+   * Figma's Content frame (node 1671:16334) is its own elevated surface —
+   * colorNeutralBackground2 with Elevation Shadow 08 — not transparent chrome.
+   * Individual cards inside still carry their own Shadow 04/08 on top of it.
+   */
   content: {
     flexGrow: 1,
     minWidth: 0,
+    minHeight: `calc(100vh - ${layoutTokens.topBarHeight})`,
+    backgroundColor: tokens.colorNeutralBackground2,
+    boxShadow: tokens.shadow8,
     paddingInline: layoutTokens.contentPaddingInline,
     paddingTop: layoutTokens.contentPaddingBlockStart,
     paddingBottom: layoutTokens.contentPaddingBlockEnd,
@@ -53,4 +61,3 @@ export function AppLayout() {
     </div>
   );
 }
-

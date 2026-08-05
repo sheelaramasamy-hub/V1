@@ -3,15 +3,12 @@ import { Caption2, makeStyles, mergeClasses, tokens } from "@fluentui/react-comp
 import { primaryNavItems } from "../../data/navigation";
 import type { NavItem } from "../../types/navigation";
 import { layoutTokens } from "../../theme/theme";
+import { motion, transitionFor } from "../../theme/motion";
 import { navIcons } from "./navIcons";
 import { AppSwitcherTile } from "./AppSwitcherTile";
 
 const useStyles = makeStyles({
-  /**
-   * The rail has no fill of its own in Figma — it sits directly on the page
-   * canvas next to the content, with only the active-state indicator and the
-   * switcher tile at the bottom carrying their own surfaces.
-   */
+  /** Figma's side nav fill is colorNeutralBackground4 (node 1671:16333), matching the top bar. */
   root: {
     width: layoutTokens.sideNavWidth,
     flexShrink: 0,
@@ -19,7 +16,7 @@ const useStyles = makeStyles({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "transparent",
+    backgroundColor: tokens.colorNeutralBackground4,
     height: `calc(100vh - ${layoutTokens.topBarHeight})`,
     position: "sticky",
     top: layoutTokens.topBarHeight,
@@ -41,15 +38,13 @@ const useStyles = makeStyles({
     position: "relative",
     textDecoration: "none",
     color: tokens.colorNeutralForeground2,
-    transitionProperty: "background-color, color",
-    transitionDuration: tokens.durationFaster,
-    transitionTimingFunction: tokens.curveEasyEase,
+    ...transitionFor("background-color, color", motion.feedback),
     ":hover": {
-      backgroundColor: tokens.colorNeutralBackground1Hover,
+      backgroundColor: tokens.colorNeutralBackground5,
       color: tokens.colorNeutralForeground2Hover,
     },
     ":active": {
-      backgroundColor: tokens.colorNeutralBackground1Pressed,
+      backgroundColor: tokens.colorNeutralBackground6,
     },
     ":focus-visible": {
       outline: `${tokens.strokeWidthThick} solid ${tokens.colorStrokeFocus2}`,

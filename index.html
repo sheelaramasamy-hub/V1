@@ -7,6 +7,32 @@
     <title>HCL | Microsoft Global Partner Hackathons</title>
   </head>
   <body>
+    <script>
+      /*
+       * Paints the correct chrome color before React mounts.
+       *
+       * Without this the page renders the stylesheet's light background, then React mounts and
+       * swaps to dark — a full-page flash on every load for anyone using dark theme. The two hex
+       * values are Fluent's `colorNeutralBackground4` in each theme (the top bar / side nav
+       * fill); duplicated here on purpose, since nothing from the bundle is available this early.
+       *
+       * Keep the storage key in sync with STORAGE_KEY in src/theme/ThemeProvider.tsx.
+       */
+      (function () {
+        try {
+          var stored = localStorage.getItem("hackable.colorScheme");
+          var isDark =
+            stored === "dark" ||
+            (stored !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+          var root = document.documentElement;
+          root.style.colorScheme = isDark ? "dark" : "light";
+          root.style.backgroundColor = isDark ? "#0a0a0a" : "#f0f0f0";
+        } catch (error) {
+          /* Private-mode storage access can throw; the light default is fine. */
+        }
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

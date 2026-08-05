@@ -26,6 +26,7 @@ const useStyles = makeStyles({
     height: "148px",
     transform: "translate(-50%, -50%)",
   },
+  /** Decorative, not interactive — no hover motion, which would wrongly imply these are clickable. */
   tile: {
     position: "absolute",
     display: "grid",
@@ -34,13 +35,6 @@ const useStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground1,
     boxShadow: tokens.shadow4,
     transform: "translate(-50%, -50%)",
-    transitionProperty: "transform, box-shadow",
-    transitionDuration: tokens.durationNormal,
-    transitionTimingFunction: tokens.curveEasyEase,
-    ":hover": {
-      transform: "translate(-50%, -50%) translateY(-3px)",
-      boxShadow: tokens.shadow8,
-    },
   },
 });
 

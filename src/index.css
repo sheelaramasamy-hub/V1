@@ -37,3 +37,31 @@ ol {
 button {
   font-family: inherit;
 }
+
+/*
+ * Theme switching suppresses transitions for one frame.
+ *
+ * Cards carry box-shadow/transform transitions and the nav rail carries color
+ * transitions. Without this, flipping the theme animates every one of them
+ * independently over ~150ms, which reads as a flicker rather than an instant
+ * switch. Set by ThemeProvider via a `useLayoutEffect`.
+ */
+html[data-theme-switching] *,
+html[data-theme-switching] *::before,
+html[data-theme-switching] *::after {
+  transition: none !important;
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+}
+
+/* Respect the OS setting instead of animating over people who asked us not to. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -5,6 +5,7 @@ import symbolCopilot from "../../assets/images/symbol-copilot.svg";
 import symbolFabric from "../../assets/images/symbol-fabric.png";
 import type { Challenge } from "../../types/challenges";
 import { SurfaceCard } from "../shared/SurfaceCard";
+import { liftOnHover } from "../../theme/motion";
 
 const productSymbols = [
   { src: symbolMicrosoft, alt: "Microsoft" },
@@ -18,13 +19,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     padding: `${tokens.spacingVerticalS} ${tokens.spacingHorizontalS} 0`,
-    transitionProperty: "box-shadow, transform",
-    transitionDuration: tokens.durationNormal,
-    transitionTimingFunction: tokens.curveEasyEase,
-    ":hover": {
-      transform: "translateY(-2px)",
-      boxShadow: tokens.shadow16,
-    },
+    ...liftOnHover,
   },
   cover: {
     position: "relative",

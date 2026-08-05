@@ -37,9 +37,6 @@ const useStyles = makeStyles({
   bar: {
     width: "100%",
     borderRadius: `${tokens.borderRadiusSmall} ${tokens.borderRadiusSmall} 0 0`,
-    transitionProperty: "opacity",
-    transitionDuration: tokens.durationFaster,
-    transitionTimingFunction: tokens.curveEasyEase,
   },
   labels: {
     display: "flex",

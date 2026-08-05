@@ -2,7 +2,11 @@ import {
   Avatar,
   Button,
   Menu,
+  MenuDivider,
+  MenuGroup,
+  MenuGroupHeader,
   MenuItem,
+  MenuItemRadio,
   MenuList,
   MenuPopover,
   MenuTrigger,
@@ -10,18 +14,36 @@ import {
   mergeClasses,
   tokens,
 } from "@fluentui/react-components";
-import { ChevronDown12Regular, Globe20Regular, GridDots20Regular } from "@fluentui/react-icons";
+import {
+  ChevronDown12Regular,
+  Globe20Regular,
+  GridDots20Regular,
+  Settings20Regular,
+  WeatherMoon20Regular,
+  WeatherSunny20Regular,
+} from "@fluentui/react-icons";
 import { ChatIcon } from "./ChatIcon";
 import { PartnerLogo } from "./PartnerLogo";
 import { MicrosoftMark } from "./MicrosoftMark";
 import { layoutTokens } from "../../theme/theme";
+import { motion, transitionFor } from "../../theme/motion";
+import { useAppTheme } from "../../theme/theme-context";
+import type { ColorSchemePreference } from "../../theme/theme-context";
+
+/** In the order people expect to find them: follow the OS, then the two explicit choices. */
+const THEME_OPTIONS: { value: ColorSchemePreference; label: string; icon: typeof Settings20Regular }[] = [
+  { value: "system", label: "System", icon: Settings20Regular },
+  { value: "light", label: "Light", icon: WeatherSunny20Regular },
+  { value: "dark", label: "Dark", icon: WeatherMoon20Regular },
+];
+
+const THEME_RADIO_NAME = "colorScheme";
 
 const useStyles = makeStyles({
   /**
-   * Figma's suite header has no fill of its own (colorSubtleBackground
-   * resolves to transparent on this node) and no drop shadow — it just sits
-   * on the page canvas alongside the side nav. Only the content cards below
-   * carry a background + elevation.
+   * Figma's suite header fill is colorNeutralBackground4 (node 1671:16303),
+   * matching the side nav below it — no drop shadow of its own; the content
+   * frame carries the elevation as one panel.
    */
   root: {
     height: layoutTokens.topBarHeight,
@@ -29,7 +51,7 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "space-between",
     paddingRight: tokens.spacingHorizontalXXL,
-    backgroundColor: "transparent",
+    backgroundColor: tokens.colorNeutralBackground4,
     position: "sticky",
     top: 0,
     zIndex: 100,
@@ -132,9 +154,7 @@ const useStyles = makeStyles({
     backgroundImage:
       "linear-gradient(162.32deg, rgb(163, 189, 255) 6.7888%, rgb(192, 225, 255) 39.014%, rgb(185, 237, 227) 83.944%)",
     boxShadow: "inset 0 0 4px 0 rgba(255, 255, 255, 0.56)",
-    transitionProperty: "transform",
-    transitionDuration: tokens.durationFaster,
-    transitionTimingFunction: tokens.curveEasyEase,
+    ...transitionFor("transform", motion.feedback),
     ":hover": {
       transform: "translateY(-1px)",
     },
@@ -161,6 +181,7 @@ const useStyles = makeStyles({
 
 export function TopBar({ onOpenAssistant }: { onOpenAssistant: () => void }) {
   const styles = useStyles();
+  const { colorSchemePreference, setColorSchemePreference } = useAppTheme();
 
   return (
     <header className={styles.root}>
@@ -205,12 +226,20 @@ export function TopBar({ onOpenAssistant }: { onOpenAssistant: () => void }) {
             </MenuPopover>
           </Menu>
 
-          <Menu>
+          <Menu
+            checkedValues={{ [THEME_RADIO_NAME]: [colorSchemePreference] }}
+            onCheckedValueChange={(_event, data) => {
+              const [next] = data.checkedItems;
+              if (data.name === THEME_RADIO_NAME && next) {
+                setColorSchemePreference(next as ColorSchemePreference);
+              }
+            }}
+          >
             <MenuTrigger disableButtonEnhancement>
               <button
                 type="button"
                 className={mergeClasses(styles.resetButton, styles.profileTrigger)}
-                aria-label="Account manager for Priya Hariharan"
+                aria-label="Account menu for Priya Hariharan"
               >
                 <Avatar name="Priya Hariharan" initials="PH" size={32} color="neutral" />
                 <ChevronDown12Regular />
@@ -220,6 +249,21 @@ export function TopBar({ onOpenAssistant }: { onOpenAssistant: () => void }) {
               <MenuList>
                 <MenuItem>My profile</MenuItem>
                 <MenuItem>Settings</MenuItem>
+                <MenuDivider />
+                <MenuGroup>
+                  <MenuGroupHeader>Appearance</MenuGroupHeader>
+                  {THEME_OPTIONS.map((option) => (
+                    <MenuItemRadio
+                      key={option.value}
+                      name={THEME_RADIO_NAME}
+                      value={option.value}
+                      icon={<option.icon />}
+                    >
+                      {option.label}
+                    </MenuItemRadio>
+                  ))}
+                </MenuGroup>
+                <MenuDivider />
                 <MenuItem>Sign out</MenuItem>
               </MenuList>
             </MenuPopover>
@@ -241,4 +285,3 @@ export function TopBar({ onOpenAssistant }: { onOpenAssistant: () => void }) {
     </header>
   );
 }
-

@@ -7,6 +7,11 @@ export const appLightTheme: Theme = {
 
 export const appDarkTheme: Theme = {
   ...createDarkTheme(hackableGreen),
+  // Fluent's own dark-theme guidance: the generated brand foreground sits too
+  // dark against dark surfaces for comfortable reading, so it's re-pointed at
+  // lighter ramp stops than createDarkTheme's default (ramp[100]/[110]).
+  colorBrandForeground1: hackableGreen[110],
+  colorBrandForeground2: hackableGreen[120],
 };
 
 /**

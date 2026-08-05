@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Button, makeStyles, tokens } from "@fluentui/react-components";
+import { Button, makeStyles, mergeClasses, tokens } from "@fluentui/react-components";
 import { ArrowRight16Regular, ChevronDown12Regular } from "@fluentui/react-icons";
 import copilotSymbol from "../../assets/images/symbol-copilot.svg";
 import fabricSymbol from "../../assets/images/symbol-fabric.png";
 import microsoftSymbol from "../../assets/images/symbol-microsoft.svg";
 import { aboutHackathon, prerequisites } from "../../data/about";
 import { SurfaceCard } from "../shared/SurfaceCard";
+import { motion, transitionFor } from "../../theme/motion";
 import { AboutVisual, type VisualTile } from "./AboutVisual";
 
 const useStyles = makeStyles({
@@ -66,8 +67,29 @@ const useStyles = makeStyles({
     lineHeight: tokens.lineHeightBase100,
     fontWeight: tokens.fontWeightRegular,
   },
+  prerequisitesIcon: {
+    ...transitionFor("transform", motion.feedback),
+  },
   prerequisitesIconOpen: {
     transform: "rotate(180deg)",
+  },
+  /**
+   * `grid-template-rows: 0fr -> 1fr` animates to the content's intrinsic
+   * height without measuring it in JS — the standard CSS-only expand/collapse
+   * technique. The inner `minHeight: 0` is required for the row to actually
+   * collapse rather than clamping at its content's minimum size.
+   */
+  prerequisitesCollapse: {
+    display: "grid",
+    gridTemplateRows: "0fr",
+    ...transitionFor("grid-template-rows", motion.expand),
+  },
+  prerequisitesCollapseOpen: {
+    gridTemplateRows: "1fr",
+  },
+  prerequisitesCollapseInner: {
+    minHeight: 0,
+    overflow: "hidden",
   },
   prerequisitesGrid: {
     width: "100%",
@@ -188,7 +210,10 @@ export function AboutHackathonSection() {
               className={styles.prerequisitesButton}
               icon={
                 <ChevronDown12Regular
-                  className={prerequisitesExpanded ? styles.prerequisitesIconOpen : undefined}
+                  className={mergeClasses(
+                    styles.prerequisitesIcon,
+                    prerequisitesExpanded && styles.prerequisitesIconOpen,
+                  )}
                   aria-hidden="true"
                 />
               }
@@ -201,16 +226,23 @@ export function AboutHackathonSection() {
             </Button>
           </div>
 
-          {prerequisitesExpanded && (
-            <div id="hackathon-prerequisites" className={styles.prerequisitesGrid}>
-              {prerequisites.map((item) => (
-                <article key={item.id} className={styles.prerequisiteCard}>
-                  <h3 className={styles.prerequisiteTitle}>{item.title}</h3>
-                  <p className={styles.prerequisiteDetail}>{item.detail}</p>
-                </article>
-              ))}
+          <div
+            className={mergeClasses(
+              styles.prerequisitesCollapse,
+              prerequisitesExpanded && styles.prerequisitesCollapseOpen,
+            )}
+          >
+            <div id="hackathon-prerequisites" className={styles.prerequisitesCollapseInner}>
+              <div className={styles.prerequisitesGrid}>
+                {prerequisites.map((item) => (
+                  <article key={item.id} className={styles.prerequisiteCard}>
+                    <h3 className={styles.prerequisiteTitle}>{item.title}</h3>
+                    <p className={styles.prerequisiteDetail}>{item.detail}</p>
+                  </article>
+                ))}
+              </div>
             </div>
-          )}
+          </div>
         </div>
 
         <div className={styles.visual}>

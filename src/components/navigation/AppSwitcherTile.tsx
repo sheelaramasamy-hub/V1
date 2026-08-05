@@ -1,5 +1,6 @@
 import { Caption2, makeStyles, tokens } from "@fluentui/react-components";
 import { HackableMark } from "../shared/HackableMark";
+import { motion, transitionFor } from "../../theme/motion";
 
 const useStyles = makeStyles({
   wrap: {
@@ -19,9 +20,7 @@ const useStyles = makeStyles({
     border: "none",
     cursor: "pointer",
     color: tokens.colorNeutralForeground2,
-    transitionProperty: "box-shadow",
-    transitionDuration: tokens.durationFaster,
-    transitionTimingFunction: tokens.curveEasyEase,
+    ...transitionFor("box-shadow", motion.feedback),
     ":hover": {
       boxShadow: tokens.shadow8,
     },

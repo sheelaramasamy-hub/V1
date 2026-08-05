@@ -16,6 +16,7 @@ import type { FluentIcon } from "@fluentui/react-icons";
 import { Board20Regular, BookOpen20Regular, Dismiss24Regular, Headset20Regular, History20Regular, Send20Regular, Sparkle20Regular, Trophy20Regular } from "@fluentui/react-icons";
 import { assistantGreeting, quickActions, recentConversations, suggestedPrompts } from "../../data/aiAssistant";
 import type { QuickAction } from "../../types/aiAssistant";
+import { motion, transitionFor } from "../../theme/motion";
 
 const quickActionIcons: Record<QuickAction["icon"], FluentIcon> = {
   workshops: Board20Regular,
@@ -80,8 +81,7 @@ const useStyles = makeStyles({
     padding: `${tokens.spacingVerticalS} 0`,
     cursor: "pointer",
     borderRadius: tokens.borderRadiusMedium,
-    transitionProperty: "background-color",
-    transitionDuration: tokens.durationFast,
+    ...transitionFor("background-color", motion.feedback),
     ":hover": {
       backgroundColor: tokens.colorNeutralBackground1Hover,
     },
