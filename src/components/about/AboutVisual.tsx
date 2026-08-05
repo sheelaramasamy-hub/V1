@@ -1,10 +1,11 @@
 import type { ReactNode } from "react";
 import { makeStyles, tokens } from "@fluentui/react-components";
-import peopleGroup from "../../assets/images/people-group-illustration.svg";
+import { hackableGreen } from "../../theme/brandRamp";
+import { HackableMark } from "../shared/HackableMark";
 
 export interface VisualTile {
   node: ReactNode;
-  /** Position as a percentage of the visual's box, hand-tuned for a designed cluster rather than a strict grid. */
+  /** Position as a percentage of the visual's box — traces a pentagon around the hub. */
   x: number;
   y: number;
   /** Tile size in px — larger for the tiles meant to read as "closer". */
@@ -17,14 +18,44 @@ const useStyles = makeStyles({
     width: "100%",
     height: "100%",
   },
-  /** The official "People Group" illustration from the Fabric visuals kit — the hackathon's community, front and center. */
-  people: {
+  /** Soft radial glow behind the hub, matching the Figma composition's halo. */
+  halo: {
     position: "absolute",
-    left: "18%",
-    top: "50%",
-    width: "148px",
-    height: "148px",
+    left: "69.77%",
+    top: "52.63%",
+    width: "260px",
+    height: "260px",
     transform: "translate(-50%, -50%)",
+    borderRadius: tokens.borderRadiusCircular,
+    background: `radial-gradient(circle, ${hackableGreen[150]} 0%, ${hackableGreen[160]}00 70%)`,
+    pointerEvents: "none",
+  },
+  /** Dotted orbit ring the five product tiles sit on, echoing the Figma illustration's structure. */
+  orbit: {
+    position: "absolute",
+    left: "69.77%",
+    top: "52.63%",
+    width: "160px",
+    height: "160px",
+    transform: "translate(-50%, -50%)",
+    borderRadius: tokens.borderRadiusCircular,
+    border: `1.5px dashed ${hackableGreen[130]}`,
+    pointerEvents: "none",
+  },
+  /** Central hub — the Hackable mark, the hackathon's own "product" at the center of everything it connects. */
+  hub: {
+    position: "absolute",
+    left: "69.77%",
+    top: "52.63%",
+    width: "84px",
+    height: "84px",
+    transform: "translate(-50%, -50%)",
+    borderRadius: tokens.borderRadiusCircular,
+    backgroundColor: tokens.colorNeutralBackground1,
+    boxShadow: tokens.shadow8,
+    display: "grid",
+    placeItems: "center",
+    color: tokens.colorBrandForeground1,
   },
   /** Decorative, not interactive — no hover motion, which would wrongly imply these are clickable. */
   tile: {
@@ -39,16 +70,22 @@ const useStyles = makeStyles({
 });
 
 /**
- * Backdrop for the About section's product row: the Fabric kit's "People
- * Group" illustration anchoring the hackathon's community theme, with the
- * five product tiles composed as a deliberate cluster around it.
+ * Backdrop for the About section's product row — a live, token-built "orbit"
+ * composition (hub, halo, dotted ring, five product tiles) that follows the
+ * structure of the Figma illustration (node 1682:17463) rather than
+ * embedding it as a flat raster, so it stays crisp and re-themes for dark
+ * mode instead of carrying a fixed light-mode palette baked into a PNG.
  */
 export function AboutVisual({ tiles }: { tiles: VisualTile[] }) {
   const styles = useStyles();
 
   return (
     <div className={styles.root}>
-      <img src={peopleGroup} alt="" className={styles.people} aria-hidden="true" />
+      <span className={styles.halo} aria-hidden="true" />
+      <span className={styles.orbit} aria-hidden="true" />
+      <span className={styles.hub} aria-hidden="true">
+        <HackableMark size={34} />
+      </span>
 
       {tiles.map((tile, i) => (
         <div

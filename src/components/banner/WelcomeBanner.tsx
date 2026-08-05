@@ -1,7 +1,7 @@
-import { makeStyles, tokens } from "@fluentui/react-components";
+import { makeStyles, mergeClasses, tokens } from "@fluentui/react-components";
 import { hackableGreen } from "../../theme/brandRamp";
 import { currentUser } from "../../data/banner";
-import fabricHero from "../../assets/images/fabric-hero-01.png";
+import bannerHero from "../../assets/images/welcome-banner-hero.png";
 
 const useStyles = makeStyles({
   /**
@@ -78,35 +78,62 @@ const useStyles = makeStyles({
     },
   },
   /**
-   * Frames the official Microsoft Fabric 3D visual ("Fabric 01" from the
-   * Fabric visuals kit) in a light card, the way Fabric's own marketing
-   * surfaces present these renders — rather than fighting the asset's white
-   * background against the banner's dark gradient with a blend mode.
+   * The exact hero illustration from Figma (node 1682:16911), reproduced with
+   * its own three-layer glow technique: a larger blurred duplicate behind the
+   * sharp artwork, plus a screen-blended sheen on top — same asset, three
+   * treatments, exactly as Figma composed it. The PNG carries real alpha
+   * transparency, so it sits directly on the banner gradient with no card.
    */
-  illustrationFrame: {
+  illustrationStack: {
     position: "relative",
     zIndex: 1,
     flexShrink: 0,
-    width: "300px",
-    height: "210px",
-    borderRadius: tokens.borderRadiusLarge,
-    overflow: "hidden",
-    boxShadow: tokens.shadow16,
+    alignSelf: "flex-end",
+    width: "420px",
+    // A concrete height, not 100%: `.root` sizes to its content (no definite
+    // height), so a percentage here resolved to 0. Taller than the banner on
+    // purpose — bottom-anchored via `alignSelf` and `object-position: bottom`
+    // on the images, with the excess clipped by `.root`'s overflow: hidden,
+    // matching how Figma crops this illustration at the banner's top edge.
+    height: "260px",
     "@media (max-width: 900px)": {
-      width: "220px",
-      height: "154px",
+      width: "260px",
+      height: "170px",
     },
     "@media (max-width: 560px)": {
       display: "none",
     },
   },
+  /** Shared by all three layers; deliberately excludes position offsets so each layer sets its own without fighting over class-merge order. */
   illustrationImage: {
+    position: "absolute",
+    objectFit: "contain",
+    objectPosition: "bottom",
+    display: "block",
+    pointerEvents: "none",
+  },
+  illustrationBase: {
+    top: 0,
+    left: 0,
     width: "100%",
     height: "100%",
-    objectFit: "cover",
-    objectPosition: "82% 55%",
-    display: "block",
-    transform: "scale(1.3)",
+  },
+  illustrationGlow: {
+    top: "-8%",
+    left: "-8%",
+    width: "116%",
+    height: "116%",
+    mixBlendMode: "screen",
+    filter: "blur(18px)",
+    opacity: 0.85,
+  },
+  illustrationSheen: {
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    mixBlendMode: "screen",
+    opacity: 0.51,
   },
 });
 
@@ -126,8 +153,14 @@ export function WelcomeBanner() {
         </p>
       </div>
       <span className={styles.ring} aria-hidden="true" />
-      <div className={styles.illustrationFrame}>
-        <img src={fabricHero} alt="" className={styles.illustrationImage} />
+      <div className={styles.illustrationStack}>
+        <img
+          src={bannerHero}
+          alt=""
+          className={mergeClasses(styles.illustrationImage, styles.illustrationGlow)}
+        />
+        <img src={bannerHero} alt="" className={mergeClasses(styles.illustrationImage, styles.illustrationBase)} />
+        <img src={bannerHero} alt="" className={mergeClasses(styles.illustrationImage, styles.illustrationSheen)} />
       </div>
     </section>
   );
