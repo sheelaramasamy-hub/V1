@@ -1,0 +1,37 @@
+/**
+ * HCL partner wordmark, exported from the Figma suite header (node 1620:1474).
+ * Paths use `currentColor` so the mark inherits whatever foreground token the
+ * header sets, keeping it legible in light, dark and high-contrast themes.
+ */
+export function PartnerLogo({ height = 10 }: { height?: number }) {
+  const width = (51.9096 / 10) * height;
+
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 51.9096 10"
+      fill="none"
+      role="img"
+      aria-label="HCL"
+      focusable="false"
+    >
+      <path
+        d="M0 9.69024H5.62559L6.83483 5.95254H12.3553L11.1285 9.69024H16.8242L19.9437 0.334072H14.2129L13.179 3.50041H7.65851L8.71003 0.334072H3.13701L0 9.69024Z"
+        fill="currentColor"
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M32.4396 3.5242H37.7672C37.7322 1.95294 36.6105 0.857811 34.3848 0.429284C29.986 -0.451577 25.2192 -0.070664 21.8368 2.45288C19.173 4.45268 18.9627 7.45236 21.6265 8.9284C23.8697 10.1664 28.5665 10.2854 31.9313 9.52358C34.1044 9.02363 35.7693 8.07135 36.7157 6.61912H31.2829C30.5819 7.35714 29.653 7.71424 28.584 7.73805C25.5346 7.76186 25.1315 6.52389 25.6573 5.07166C26.2882 3.38136 27.6201 2.45288 29.653 2.38146C31.2128 2.31004 32.0014 2.78618 32.4396 3.5242Z"
+        fill="currentColor"
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M46.284 0.334072L43.9006 7.45238H51.9096L51.1736 9.66643H37.3987L40.5007 0.334072H46.284Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}

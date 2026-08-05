@@ -1,0 +1,244 @@
+import { useState } from "react";
+import { Button, makeStyles, mergeClasses, tokens } from "@fluentui/react-components";
+import { ChevronDown12Regular } from "@fluentui/react-icons";
+import copilotSymbol from "../../assets/images/symbol-copilot.svg";
+import fabricSymbol from "../../assets/images/symbol-fabric.png";
+import microsoftSymbol from "../../assets/images/symbol-microsoft.svg";
+import { prerequisites } from "../../data/about";
+import { aboutHackathon } from "../../data/challenges";
+import { HackableMark } from "../shared/HackableMark";
+import { SurfaceCard } from "../shared/SurfaceCard";
+
+const useStyles = makeStyles({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  introCard: {
+    position: "relative",
+    minHeight: "260px",
+    padding: "16px",
+    display: "grid",
+    gridTemplateColumns: "minmax(0, 1fr) 430px",
+    alignItems: "start",
+    gap: tokens.spacingHorizontalXXL,
+    overflow: "hidden",
+    "@media (max-width: 900px)": {
+      gridTemplateColumns: "1fr",
+      minHeight: "auto",
+    },
+  },
+  introContent: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: tokens.spacingVerticalM,
+    minWidth: 0,
+    zIndex: 1,
+  },
+  introActions: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: tokens.spacingVerticalS,
+  },
+  heading: {
+    margin: 0,
+    fontFamily: tokens.fontFamilyBase,
+    fontSize: tokens.fontSizeBase500,
+    lineHeight: tokens.lineHeightBase500,
+    fontWeight: tokens.fontWeightSemibold,
+    color: tokens.colorNeutralForeground1,
+  },
+  description: {
+    margin: 0,
+    maxWidth: "660px",
+    fontFamily: tokens.fontFamilyBase,
+    fontSize: tokens.fontSizeBase200,
+    lineHeight: tokens.lineHeightBase300,
+    color: tokens.colorNeutralForeground2,
+  },
+  textButton: {
+    minWidth: "48px",
+  },
+  prerequisitesButton: {
+    minWidth: 0,
+    paddingLeft: 0,
+    paddingRight: 0,
+    color: tokens.colorBrandForeground1,
+    fontSize: tokens.fontSizeBase100,
+    lineHeight: tokens.lineHeightBase100,
+    fontWeight: tokens.fontWeightRegular,
+  },
+  prerequisitesIconOpen: {
+    transform: "rotate(180deg)",
+  },
+  prerequisitesGrid: {
+    width: "100%",
+    display: "grid",
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+    gap: tokens.spacingHorizontalS,
+    marginTop: tokens.spacingVerticalXS,
+    "@media (max-width: 700px)": {
+      gridTemplateColumns: "1fr",
+    },
+  },
+  prerequisiteCard: {
+    padding: "16px",
+    border: `${tokens.strokeWidthThin} solid ${tokens.colorNeutralStroke2}`,
+    borderRadius: tokens.borderRadiusMedium,
+    backgroundColor: tokens.colorNeutralBackground1,
+  },
+  prerequisiteTitle: {
+    margin: 0,
+    fontFamily: tokens.fontFamilyBase,
+    fontSize: tokens.fontSizeBase200,
+    lineHeight: tokens.lineHeightBase200,
+    fontWeight: tokens.fontWeightSemibold,
+    color: tokens.colorNeutralForeground1,
+  },
+  prerequisiteDetail: {
+    margin: `${tokens.spacingVerticalXXS} 0 0`,
+    fontFamily: tokens.fontFamilyBase,
+    fontSize: tokens.fontSizeBase100,
+    lineHeight: tokens.lineHeightBase100,
+    color: tokens.colorNeutralForeground3,
+  },
+  visual: {
+    position: "relative",
+    width: "430px",
+    height: "228px",
+    justifySelf: "end",
+    flexShrink: 0,
+    "@media (max-width: 900px)": {
+      justifySelf: "center",
+      width: "min(430px, 100%)",
+    },
+  },
+  logoTile: {
+    position: "absolute",
+    width: "66px",
+    height: "66px",
+    display: "grid",
+    placeItems: "center",
+    border: `${tokens.strokeWidthThin} solid #d1d1d1`,
+    borderRadius: tokens.borderRadiusLarge,
+    backgroundColor: tokens.colorNeutralBackground1,
+    boxShadow: "0 1px 2px rgba(0, 0, 0, 0.04)",
+  },
+  logoImage: {
+    display: "block",
+    maxWidth: "34px",
+    maxHeight: "34px",
+    objectFit: "contain",
+  },
+  fabricTile: {
+    top: "8px",
+    left: "116px",
+  },
+  learnTile: {
+    top: "86px",
+    left: "18px",
+  },
+  copilotTile: {
+    top: "66px",
+    right: "44px",
+  },
+  azureTile: {
+    left: "106px",
+    bottom: "10px",
+  },
+  microsoftTile: {
+    right: "24px",
+    bottom: "10px",
+  },
+  centerMark: {
+    position: "absolute",
+    left: "calc(50% - 24px)",
+    top: "calc(50% - 26px)",
+    width: "48px",
+    height: "55px",
+    display: "grid",
+    placeItems: "center",
+    color: "#2f6d75",
+  },
+});
+
+export function AboutHackathonSection() {
+  const styles = useStyles();
+  const [prerequisitesExpanded, setPrerequisitesExpanded] = useState(false);
+
+  return (
+    <section className={styles.root} aria-labelledby="about-hackathon-heading">
+      <SurfaceCard elevation="high" className={styles.introCard}>
+        <div className={styles.introContent}>
+          <h2 id="about-hackathon-heading" className={styles.heading}>
+            {aboutHackathon.title}
+          </h2>
+          <p className={styles.description}>{aboutHackathon.description}</p>
+
+          <div className={styles.introActions}>
+            <Button appearance="primary" size="small" className={styles.textButton}>
+              Text
+            </Button>
+            <Button
+              appearance="transparent"
+              size="small"
+              className={styles.prerequisitesButton}
+              icon={
+                <ChevronDown12Regular
+                  className={prerequisitesExpanded ? styles.prerequisitesIconOpen : undefined}
+                  aria-hidden="true"
+                />
+              }
+              iconPosition="after"
+              aria-expanded={prerequisitesExpanded}
+              aria-controls="hackathon-prerequisites"
+              onClick={() => setPrerequisitesExpanded((expanded) => !expanded)}
+            >
+              Prerequisites
+            </Button>
+          </div>
+
+          {prerequisitesExpanded && (
+            <div id="hackathon-prerequisites" className={styles.prerequisitesGrid}>
+              {prerequisites.map((item) => (
+                <article key={item.id} className={styles.prerequisiteCard}>
+                  <h3 className={styles.prerequisiteTitle}>{item.title}</h3>
+                  <p className={styles.prerequisiteDetail}>{item.detail}</p>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className={styles.visual} aria-hidden="true">
+          <div className={mergeClasses(styles.logoTile, styles.fabricTile)}>
+            <img src={fabricSymbol} alt="" className={styles.logoImage} />
+          </div>
+          <div className={mergeClasses(styles.logoTile, styles.learnTile)}>
+            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" focusable="false">
+              <path d="M4.5 9h14.5l10.5 8-10.5 8H4.5l10.5-8L4.5 9Z" fill="#2B74E8" />
+              <path d="M15 9h4l10.5 8L19 25h-4l10.5-8L15 9Z" fill="#6EA8FF" />
+            </svg>
+          </div>
+          <div className={mergeClasses(styles.logoTile, styles.copilotTile)}>
+            <img src={copilotSymbol} alt="" className={styles.logoImage} />
+          </div>
+          <div className={mergeClasses(styles.logoTile, styles.azureTile)}>
+            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" focusable="false">
+              <path d="M18.2 5.5 9.6 27h7.8l2.4-6.9h5.9L18.2 5.5Z" fill="#5B5FC7" />
+              <path d="M22 10.6 15.7 27h10.7c1.5 0 2.3-1.7 1.4-2.8L22 10.6Z" fill="#3E42B8" />
+            </svg>
+          </div>
+          <div className={mergeClasses(styles.logoTile, styles.microsoftTile)}>
+            <img src={microsoftSymbol} alt="" className={styles.logoImage} />
+          </div>
+          <span className={styles.centerMark}>
+            <HackableMark size={48} />
+          </span>
+        </div>
+      </SurfaceCard>
+    </section>
+  );
+}
