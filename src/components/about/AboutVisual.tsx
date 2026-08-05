@@ -1,8 +1,6 @@
 import type { ReactNode } from "react";
 import { makeStyles, tokens } from "@fluentui/react-components";
-import { hackableGreen } from "../../theme/brandRamp";
-import { FanCards } from "../shared/illustrations/FanCards";
-import { GlowHalo } from "../shared/illustrations/GlowHalo";
+import peopleGroup from "../../assets/images/people-group-illustration.svg";
 
 export interface VisualTile {
   node: ReactNode;
@@ -18,6 +16,15 @@ const useStyles = makeStyles({
     position: "relative",
     width: "100%",
     height: "100%",
+  },
+  /** The official "People Group" illustration from the Fabric visuals kit — the hackathon's community, front and center. */
+  people: {
+    position: "absolute",
+    left: "18%",
+    top: "50%",
+    width: "148px",
+    height: "148px",
+    transform: "translate(-50%, -50%)",
   },
   tile: {
     position: "absolute",
@@ -38,38 +45,16 @@ const useStyles = makeStyles({
 });
 
 /**
- * Backdrop for the About section's product row: a fan of glass panels (the
- * same motif as the banner and Workshops illustrations) with the product
- * tiles composed as a deliberate cluster on top, rather than scattered at
- * random — each tile sized by how "close" it should read.
+ * Backdrop for the About section's product row: the Fabric kit's "People
+ * Group" illustration anchoring the hackathon's community theme, with the
+ * five product tiles composed as a deliberate cluster around it.
  */
 export function AboutVisual({ tiles }: { tiles: VisualTile[] }) {
   const styles = useStyles();
 
   return (
     <div className={styles.root}>
-      <svg width="100%" height="100%" viewBox="0 0 430 228" fill="none" aria-hidden="true" focusable="false">
-        <GlowHalo cx={330} cy={70} r={140} color={hackableGreen[110]} opacity={0.16} />
-
-        <FanCards
-          pivotX={372}
-          pivotY={222}
-          count={7}
-          startAngle={-64}
-          endAngle={18}
-          minHeight={56}
-          maxHeight={128}
-          riseOffset={8}
-          width={30}
-          colors={[hackableGreen[150], hackableGreen[140], hackableGreen[130]]}
-          opacities={[0.3, 0.45, 0.6, 0.75, 0.6, 0.45, 0.3]}
-          cornerRadius={10}
-        />
-
-        <circle cx="52" cy="52" r="3" fill={hackableGreen[100]} opacity="0.4" />
-        <circle cx="30" cy="120" r="2" fill={hackableGreen[100]} opacity="0.35" />
-        <circle cx="92" cy="30" r="2" fill={hackableGreen[100]} opacity="0.3" />
-      </svg>
+      <img src={peopleGroup} alt="" className={styles.people} aria-hidden="true" />
 
       {tiles.map((tile, i) => (
         <div

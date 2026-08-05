@@ -76,7 +76,7 @@ export function WorkshopsSection({ workshops = [] }: { workshops?: Challenge[] }
       {workshops.length === 0 ? (
         <div className={styles.emptyState}>
           <div className={styles.illustration}>
-            <EmptyWorkshopsIllustration width={240} />
+            <EmptyWorkshopsIllustration size={140} />
           </div>
           <p className={styles.emptyTitle}>No workshops scheduled yet</p>
           <p className={styles.emptyBody}>

@@ -1,7 +1,7 @@
 import { makeStyles, tokens } from "@fluentui/react-components";
 import { hackableGreen } from "../../theme/brandRamp";
 import { currentUser } from "../../data/banner";
-import { HeroIllustration } from "../shared/illustrations/HeroIllustration";
+import fabricHero from "../../assets/images/fabric-hero-01.png";
 
 const useStyles = makeStyles({
   /**
@@ -77,20 +77,36 @@ const useStyles = makeStyles({
       display: "none",
     },
   },
-  illustration: {
+  /**
+   * Frames the official Microsoft Fabric 3D visual ("Fabric 01" from the
+   * Fabric visuals kit) in a light card, the way Fabric's own marketing
+   * surfaces present these renders — rather than fighting the asset's white
+   * background against the banner's dark gradient with a blend mode.
+   */
+  illustrationFrame: {
     position: "relative",
     zIndex: 1,
     flexShrink: 0,
-    display: "flex",
+    width: "300px",
+    height: "210px",
+    borderRadius: tokens.borderRadiusLarge,
+    overflow: "hidden",
+    boxShadow: tokens.shadow16,
     "@media (max-width: 900px)": {
-      "& svg": {
-        width: "240px",
-        height: "auto",
-      },
+      width: "220px",
+      height: "154px",
     },
     "@media (max-width: 560px)": {
       display: "none",
     },
+  },
+  illustrationImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    objectPosition: "82% 55%",
+    display: "block",
+    transform: "scale(1.3)",
   },
 });
 
@@ -110,8 +126,8 @@ export function WelcomeBanner() {
         </p>
       </div>
       <span className={styles.ring} aria-hidden="true" />
-      <div className={styles.illustration}>
-        <HeroIllustration width={460} />
+      <div className={styles.illustrationFrame}>
+        <img src={fabricHero} alt="" className={styles.illustrationImage} />
       </div>
     </section>
   );

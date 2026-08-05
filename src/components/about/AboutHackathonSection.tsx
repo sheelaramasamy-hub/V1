@@ -119,10 +119,14 @@ const useStyles = makeStyles({
   },
 });
 
-/** Hand-composed cluster positions (percent of the visual box) — sized by how "close" each tile should read. */
+/**
+ * Hand-composed cluster positions (percent of the visual box), kept clear of
+ * the People Group illustration anchored at the left, arcing across the top
+ * and right instead — sized by how "close" each tile should read.
+ */
 function useProductTiles(styles: ReturnType<typeof useStyles>): VisualTile[] {
   return [
-    { node: <img src={fabricSymbol} alt="Microsoft Fabric" className={styles.tileImage} />, x: 44, y: 16, size: 64 },
+    { node: <img src={fabricSymbol} alt="Microsoft Fabric" className={styles.tileImage} />, x: 54, y: 10, size: 60 },
     {
       node: (
         <svg width="60%" height="60%" viewBox="0 0 34 34" fill="none" aria-hidden="true" focusable="false">
@@ -130,14 +134,14 @@ function useProductTiles(styles: ReturnType<typeof useStyles>): VisualTile[] {
           <path d="M15 9h4l10.5 8L19 25h-4l10.5-8L15 9Z" fill="#6EA8FF" />
         </svg>
       ),
-      x: 16,
-      y: 48,
+      x: 82,
+      y: 22,
       size: 48,
     },
     {
       node: <img src={copilotSymbol} alt="Microsoft Copilot" className={styles.tileImage} />,
-      x: 76,
-      y: 32,
+      x: 95,
+      y: 48,
       size: 56,
     },
     {
@@ -147,14 +151,14 @@ function useProductTiles(styles: ReturnType<typeof useStyles>): VisualTile[] {
           <path d="M22 10.6 15.7 27h10.7c1.5 0 2.3-1.7 1.4-2.8L22 10.6Z" fill="#3E42B8" />
         </svg>
       ),
-      x: 38,
-      y: 80,
+      x: 52,
+      y: 88,
       size: 56,
     },
     {
       node: <img src={microsoftSymbol} alt="Microsoft" className={styles.tileImage} />,
-      x: 84,
-      y: 76,
+      x: 88,
+      y: 82,
       size: 64,
     },
   ];
