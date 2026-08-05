@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { Button, makeStyles, mergeClasses, tokens } from "@fluentui/react-components";
-import { ChevronDown12Regular } from "@fluentui/react-icons";
+import { Button, makeStyles, tokens } from "@fluentui/react-components";
+import { ArrowRight16Regular, ChevronDown12Regular } from "@fluentui/react-icons";
 import copilotSymbol from "../../assets/images/symbol-copilot.svg";
 import fabricSymbol from "../../assets/images/symbol-fabric.png";
 import microsoftSymbol from "../../assets/images/symbol-microsoft.svg";
-import { prerequisites } from "../../data/about";
-import { aboutHackathon } from "../../data/challenges";
-import { HackableMark } from "../shared/HackableMark";
+import { aboutHackathon, prerequisites } from "../../data/about";
 import { SurfaceCard } from "../shared/SurfaceCard";
+import { AboutVisual, type VisualTile } from "./AboutVisual";
 
 const useStyles = makeStyles({
   root: {
@@ -57,9 +56,6 @@ const useStyles = makeStyles({
     fontSize: tokens.fontSizeBase200,
     lineHeight: tokens.lineHeightBase300,
     color: tokens.colorNeutralForeground2,
-  },
-  textButton: {
-    minWidth: "48px",
   },
   prerequisitesButton: {
     minWidth: 0,
@@ -115,58 +111,59 @@ const useStyles = makeStyles({
       width: "min(430px, 100%)",
     },
   },
-  logoTile: {
-    position: "absolute",
-    width: "66px",
-    height: "66px",
-    display: "grid",
-    placeItems: "center",
-    border: `${tokens.strokeWidthThin} solid #d1d1d1`,
-    borderRadius: tokens.borderRadiusLarge,
-    backgroundColor: tokens.colorNeutralBackground1,
-    boxShadow: "0 1px 2px rgba(0, 0, 0, 0.04)",
-  },
-  logoImage: {
+  tileImage: {
     display: "block",
-    maxWidth: "34px",
-    maxHeight: "34px",
+    maxWidth: "56%",
+    maxHeight: "56%",
     objectFit: "contain",
   },
-  fabricTile: {
-    top: "8px",
-    left: "116px",
-  },
-  learnTile: {
-    top: "86px",
-    left: "18px",
-  },
-  copilotTile: {
-    top: "66px",
-    right: "44px",
-  },
-  azureTile: {
-    left: "106px",
-    bottom: "10px",
-  },
-  microsoftTile: {
-    right: "24px",
-    bottom: "10px",
-  },
-  centerMark: {
-    position: "absolute",
-    left: "calc(50% - 24px)",
-    top: "calc(50% - 26px)",
-    width: "48px",
-    height: "55px",
-    display: "grid",
-    placeItems: "center",
-    color: "#2f6d75",
-  },
 });
+
+/** Hand-composed cluster positions (percent of the visual box) — sized by how "close" each tile should read. */
+function useProductTiles(styles: ReturnType<typeof useStyles>): VisualTile[] {
+  return [
+    { node: <img src={fabricSymbol} alt="Microsoft Fabric" className={styles.tileImage} />, x: 44, y: 16, size: 64 },
+    {
+      node: (
+        <svg width="60%" height="60%" viewBox="0 0 34 34" fill="none" aria-hidden="true" focusable="false">
+          <path d="M4.5 9h14.5l10.5 8-10.5 8H4.5l10.5-8L4.5 9Z" fill="#2B74E8" />
+          <path d="M15 9h4l10.5 8L19 25h-4l10.5-8L15 9Z" fill="#6EA8FF" />
+        </svg>
+      ),
+      x: 16,
+      y: 48,
+      size: 48,
+    },
+    {
+      node: <img src={copilotSymbol} alt="Microsoft Copilot" className={styles.tileImage} />,
+      x: 76,
+      y: 32,
+      size: 56,
+    },
+    {
+      node: (
+        <svg width="60%" height="60%" viewBox="0 0 34 34" fill="none" aria-hidden="true" focusable="false">
+          <path d="M18.2 5.5 9.6 27h7.8l2.4-6.9h5.9L18.2 5.5Z" fill="#5B5FC7" />
+          <path d="M22 10.6 15.7 27h10.7c1.5 0 2.3-1.7 1.4-2.8L22 10.6Z" fill="#3E42B8" />
+        </svg>
+      ),
+      x: 38,
+      y: 80,
+      size: 56,
+    },
+    {
+      node: <img src={microsoftSymbol} alt="Microsoft" className={styles.tileImage} />,
+      x: 84,
+      y: 76,
+      size: 64,
+    },
+  ];
+}
 
 export function AboutHackathonSection() {
   const styles = useStyles();
   const [prerequisitesExpanded, setPrerequisitesExpanded] = useState(false);
+  const tiles = useProductTiles(styles);
 
   return (
     <section className={styles.root} aria-labelledby="about-hackathon-heading">
@@ -178,8 +175,8 @@ export function AboutHackathonSection() {
           <p className={styles.description}>{aboutHackathon.description}</p>
 
           <div className={styles.introActions}>
-            <Button appearance="primary" size="small" className={styles.textButton}>
-              Text
+            <Button appearance="primary" icon={<ArrowRight16Regular />} iconPosition="after">
+              {aboutHackathon.primaryAction}
             </Button>
             <Button
               appearance="transparent"
@@ -212,31 +209,8 @@ export function AboutHackathonSection() {
           )}
         </div>
 
-        <div className={styles.visual} aria-hidden="true">
-          <div className={mergeClasses(styles.logoTile, styles.fabricTile)}>
-            <img src={fabricSymbol} alt="" className={styles.logoImage} />
-          </div>
-          <div className={mergeClasses(styles.logoTile, styles.learnTile)}>
-            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" focusable="false">
-              <path d="M4.5 9h14.5l10.5 8-10.5 8H4.5l10.5-8L4.5 9Z" fill="#2B74E8" />
-              <path d="M15 9h4l10.5 8L19 25h-4l10.5-8L15 9Z" fill="#6EA8FF" />
-            </svg>
-          </div>
-          <div className={mergeClasses(styles.logoTile, styles.copilotTile)}>
-            <img src={copilotSymbol} alt="" className={styles.logoImage} />
-          </div>
-          <div className={mergeClasses(styles.logoTile, styles.azureTile)}>
-            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" focusable="false">
-              <path d="M18.2 5.5 9.6 27h7.8l2.4-6.9h5.9L18.2 5.5Z" fill="#5B5FC7" />
-              <path d="M22 10.6 15.7 27h10.7c1.5 0 2.3-1.7 1.4-2.8L22 10.6Z" fill="#3E42B8" />
-            </svg>
-          </div>
-          <div className={mergeClasses(styles.logoTile, styles.microsoftTile)}>
-            <img src={microsoftSymbol} alt="" className={styles.logoImage} />
-          </div>
-          <span className={styles.centerMark}>
-            <HackableMark size={48} />
-          </span>
+        <div className={styles.visual}>
+          <AboutVisual tiles={tiles} />
         </div>
       </SurfaceCard>
     </section>

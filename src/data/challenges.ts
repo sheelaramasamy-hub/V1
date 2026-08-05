@@ -11,12 +11,6 @@ export const challengeTabs: ChallengeTab[] = [
   { key: "previous", label: "Previous" },
 ];
 
-export const aboutHackathon = {
-  title: "About Your Hackathon",
-  description:
-    "In this Hackathon, you'll explore and build solutions using Microsoft technologies such as Fabric, Microsoft Dynamics 365, Azure, Power Platform and more. Participants may choose any one use case from the available use cases. Once enrolled in a use case, you won't be able to enroll in another, so choose carefully.",
-};
-
 /** The three enrolled challenge cards from Figma node 1620:1638. */
 export const enrolledChallenges: Challenge[] = [
   {

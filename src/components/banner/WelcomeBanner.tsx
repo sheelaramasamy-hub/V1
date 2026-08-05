@@ -1,7 +1,7 @@
 import { makeStyles, tokens } from "@fluentui/react-components";
-import heroImage from "../../assets/images/welcome-banner-hero.png";
 import { hackableGreen } from "../../theme/brandRamp";
 import { currentUser } from "../../data/banner";
+import { HeroIllustration } from "../shared/illustrations/HeroIllustration";
 
 const useStyles = makeStyles({
   /**
@@ -77,15 +77,16 @@ const useStyles = makeStyles({
       display: "none",
     },
   },
-  heroImage: {
+  illustration: {
     position: "relative",
     zIndex: 1,
-    width: "489px",
-    maxWidth: "42vw",
-    height: "auto",
     flexShrink: 0,
+    display: "flex",
     "@media (max-width: 900px)": {
-      maxWidth: "240px",
+      "& svg": {
+        width: "240px",
+        height: "auto",
+      },
     },
     "@media (max-width: 560px)": {
       display: "none",
@@ -109,7 +110,9 @@ export function WelcomeBanner() {
         </p>
       </div>
       <span className={styles.ring} aria-hidden="true" />
-      <img src={heroImage} alt="" className={styles.heroImage} />
+      <div className={styles.illustration}>
+        <HeroIllustration width={460} />
+      </div>
     </section>
   );
 }
