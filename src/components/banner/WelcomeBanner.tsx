@@ -1,139 +1,138 @@
-import { makeStyles, mergeClasses, tokens } from "@fluentui/react-components";
-import { hackableGreen } from "../../theme/brandRamp";
+import { makeStyles, tokens } from "@fluentui/react-components";
 import { currentUser } from "../../data/banner";
 import bannerHero from "../../assets/images/welcome-banner-hero.png";
 
+/**
+ * Every value in this file is taken literally from Figma node 1697:18311 —
+ * exact gradient stops, exact padding, exact type scale, exact image layer
+ * positions/blend modes — rather than approximated against design tokens, per
+ * an explicit "100% exactly as in Figma" request for this one component.
+ */
 const useStyles = makeStyles({
-  /**
-   * Figma node 1643:54202. The gradient is built from the brand ramp's dark
-   * stops rather than literal hexes, so it stays a single source of truth with
-   * the rest of the brand and holds its contrast in both themes.
-   */
   root: {
     position: "relative",
     overflow: "hidden",
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-between",
-    borderRadius: tokens.borderRadiusXLarge,
-    paddingLeft: tokens.spacingHorizontalXXXL,
-    paddingRight: "48px",
-    paddingBlock: tokens.spacingVerticalXXXL,
-    backgroundImage: `linear-gradient(108.39deg, ${hackableGreen[20]} 0%, ${hackableGreen[50]} 100%)`,
+    borderRadius: "12px",
+    backgroundImage: "linear-gradient(107.6765deg, rgb(2, 49, 45) 1.2466%, rgb(44, 96, 91) 98.587%)",
     "@media (max-width: 900px)": {
       flexWrap: "wrap",
-      gap: tokens.spacingVerticalXXL,
-      paddingRight: tokens.spacingHorizontalXXXL,
     },
   },
-  copy: {
-    position: "relative",
-    zIndex: 1,
+  /** "contennt" in Figma — the only element carrying padding; the root itself has none. */
+  content: {
     display: "flex",
     flexDirection: "column",
-    gap: tokens.spacingVerticalS,
-    maxWidth: "560px",
+    alignItems: "flex-start",
+    gap: "16px",
+    flex: "1 1 0",
+    minWidth: 0,
+    height: "100%",
+    padding: "50px",
+    zIndex: 1,
+    "@media (max-width: 640px)": {
+      padding: "32px",
+    },
   },
-  /** Figma: Segoe UI Bold 18px in the brand's light tint. */
   greeting: {
     margin: 0,
     fontFamily: tokens.fontFamilyBase,
-    fontWeight: tokens.fontWeightBold,
-    fontSize: tokens.fontSizeBase400,
-    lineHeight: tokens.lineHeightBase400,
-    color: hackableGreen[140],
+    fontWeight: tokens.fontWeightSemibold,
+    fontSize: "20px",
+    lineHeight: "26px",
+    color: "#9bcfcb",
   },
-  /** Figma: Segoe UI Semibold ~21px, tight tracking, on-brand foreground. */
   title: {
     margin: 0,
     fontFamily: tokens.fontFamilyBase,
     fontWeight: tokens.fontWeightSemibold,
-    fontSize: tokens.fontSizeBase500,
-    lineHeight: tokens.lineHeightBase600,
-    letterSpacing: "-0.37px",
+    fontSize: "32px",
+    lineHeight: "40px",
     color: tokens.colorNeutralForegroundOnBrand,
   },
-  /** Figma: Segoe UI Regular 12px at 68% opacity over the gradient. */
   description: {
     margin: 0,
     fontFamily: tokens.fontFamilyBase,
-    fontWeight: tokens.fontWeightRegular,
-    fontSize: tokens.fontSizeBase200,
-    lineHeight: tokens.lineHeightBase300,
-    color: tokens.colorNeutralForegroundOnBrand,
-    opacity: 0.68,
+    fontWeight: tokens.fontWeightSemibold,
+    fontSize: "14px",
+    lineHeight: "20px",
+    color: "rgba(255, 255, 255, 0.68)",
+    maxWidth: "538px",
   },
-  /** Oversized translucent ring echoing the Figma decoration. */
-  ring: {
+  /**
+   * Halftone texture over the illustration. Not an extractable Figma layer —
+   * it's a native texture/noise effect applied inside Figma's own renderer,
+   * invisible to node/asset export — so it's reproduced here as a CSS dot
+   * grid, positioned and faded to match where it reads in the design.
+   */
+  dotTexture: {
     position: "absolute",
-    right: "68px",
-    top: "28px",
-    width: "344px",
-    height: "344px",
-    borderRadius: tokens.borderRadiusCircular,
-    border: "42px solid rgba(255, 255, 255, 0.06)",
+    left: "40%",
+    top: 0,
+    width: "45%",
+    height: "75%",
+    zIndex: 1,
+    backgroundImage: "radial-gradient(rgba(255, 255, 255, 0.4) 1px, transparent 1.5px)",
+    backgroundSize: "13px 13px",
+    maskImage: "radial-gradient(ellipse at 30% 40%, black 0%, transparent 70%)",
+    WebkitMaskImage: "radial-gradient(ellipse at 30% 40%, black 0%, transparent 70%)",
     pointerEvents: "none",
     "@media (max-width: 900px)": {
       display: "none",
     },
   },
-  /**
-   * The exact hero illustration from Figma (node 1682:16911), reproduced with
-   * its own three-layer glow technique: a larger blurred duplicate behind the
-   * sharp artwork, plus a screen-blended sheen on top — same asset, three
-   * treatments, exactly as Figma composed it. The PNG carries real alpha
-   * transparency, so it sits directly on the banner gradient with no card.
-   */
-  illustrationStack: {
+  /** "image" in Figma — a fixed 654x241 box, no padding, flush to the banner's right/bottom edges. */
+  imageBox: {
     position: "relative",
-    zIndex: 1,
+    zIndex: 2,
     flexShrink: 0,
-    alignSelf: "flex-end",
-    width: "420px",
-    // A concrete height, not 100%: `.root` sizes to its content (no definite
-    // height), so a percentage here resolved to 0. Taller than the banner on
-    // purpose — bottom-anchored via `alignSelf` and `object-position: bottom`
-    // on the images, with the excess clipped by `.root`'s overflow: hidden,
-    // matching how Figma crops this illustration at the banner's top edge.
-    height: "260px",
+    width: "654px",
+    height: "241px",
     "@media (max-width: 900px)": {
-      width: "260px",
-      height: "170px",
+      width: "380px",
+      height: "auto",
+      aspectRatio: "654 / 241",
     },
-    "@media (max-width: 560px)": {
+    "@media (max-width: 640px)": {
       display: "none",
     },
   },
-  /** Shared by all three layers; deliberately excludes position offsets so each layer sets its own without fighting over class-merge order. */
-  illustrationImage: {
+  imageLayer: {
     position: "absolute",
-    objectFit: "contain",
-    objectPosition: "bottom",
     display: "block",
     pointerEvents: "none",
   },
-  illustrationBase: {
-    top: 0,
-    left: 0,
+  /** Bottom-most: the widest, softest glow pass. */
+  layerGlowWide: {
+    left: "0%",
+    top: "-18.67%",
     width: "100%",
-    height: "100%",
-  },
-  illustrationGlow: {
-    top: "-8%",
-    left: "-8%",
-    width: "116%",
-    height: "116%",
+    height: "202.49%",
     mixBlendMode: "screen",
-    filter: "blur(18px)",
-    opacity: 0.85,
   },
-  illustrationSheen: {
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
+  /** Middle: a tighter glow pass at reduced opacity. */
+  layerGlowTight: {
+    left: "5.96%",
+    top: "-9.54%",
+    width: "93.88%",
+    height: "190.46%",
     mixBlendMode: "screen",
     opacity: 0.51,
+  },
+  /** Top-most: the sharp, normally-blended artwork — what actually reads as the illustration. */
+  layerSharp: {
+    left: "5.96%",
+    top: "-9.54%",
+    width: "93.88%",
+    height: "190.05%",
+  },
+  layerImg: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    objectPosition: "bottom",
+    display: "block",
   },
 });
 
@@ -142,7 +141,7 @@ export function WelcomeBanner() {
 
   return (
     <section className={styles.root} aria-labelledby="welcome-title">
-      <div className={styles.copy}>
+      <div className={styles.content}>
         <p className={styles.greeting}>Hello, {currentUser.firstName}</p>
         <h1 id="welcome-title" className={styles.title}>
           Welcome to HCL hackathon
@@ -152,15 +151,19 @@ export function WelcomeBanner() {
           cutting-edge solutions.
         </p>
       </div>
-      <span className={styles.ring} aria-hidden="true" />
-      <div className={styles.illustrationStack}>
-        <img
-          src={bannerHero}
-          alt=""
-          className={mergeClasses(styles.illustrationImage, styles.illustrationGlow)}
-        />
-        <img src={bannerHero} alt="" className={mergeClasses(styles.illustrationImage, styles.illustrationBase)} />
-        <img src={bannerHero} alt="" className={mergeClasses(styles.illustrationImage, styles.illustrationSheen)} />
+
+      <span className={styles.dotTexture} aria-hidden="true" />
+
+      <div className={styles.imageBox}>
+        <div className={`${styles.imageLayer} ${styles.layerGlowWide}`}>
+          <img src={bannerHero} alt="" className={styles.layerImg} />
+        </div>
+        <div className={`${styles.imageLayer} ${styles.layerGlowTight}`}>
+          <img src={bannerHero} alt="" className={styles.layerImg} />
+        </div>
+        <div className={`${styles.imageLayer} ${styles.layerSharp}`}>
+          <img src={bannerHero} alt="" className={styles.layerImg} />
+        </div>
       </div>
     </section>
   );

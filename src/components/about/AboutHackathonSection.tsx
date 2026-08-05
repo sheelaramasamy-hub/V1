@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { Button, makeStyles, mergeClasses, tokens } from "@fluentui/react-components";
 import { ArrowRight16Regular, ChevronDown12Regular } from "@fluentui/react-icons";
-import copilotSymbol from "../../assets/images/symbol-copilot.svg";
-import fabricSymbol from "../../assets/images/symbol-fabric.png";
-import microsoftSymbol from "../../assets/images/symbol-microsoft.svg";
 import { aboutHackathon, prerequisites } from "../../data/about";
 import { SurfaceCard } from "../shared/SurfaceCard";
 import { motion, transitionFor } from "../../theme/motion";
-import { AboutVisual, type VisualTile } from "./AboutVisual";
+import { AboutVisual } from "./AboutVisual";
 
 const useStyles = makeStyles({
   root: {
@@ -133,69 +130,11 @@ const useStyles = makeStyles({
       width: "min(430px, 100%)",
     },
   },
-  tileImage: {
-    display: "block",
-    maxWidth: "56%",
-    maxHeight: "56%",
-    objectFit: "contain",
-  },
 });
-
-/**
- * Positions trace a pentagon around the hub at (69.77%, 52.63%) — the same
- * center AboutVisual uses for its halo/orbit ring — radius ~80px against the
- * 430x228 visual box, computed once and hardcoded here since they never
- * change. Starts at the top and goes clockwise.
- */
-function useProductTiles(styles: ReturnType<typeof useStyles>): VisualTile[] {
-  return [
-    {
-      node: <img src={fabricSymbol} alt="Microsoft Fabric" className={styles.tileImage} />,
-      x: 69.77,
-      y: 17.54,
-      size: 60,
-    },
-    {
-      node: (
-        <svg width="60%" height="60%" viewBox="0 0 34 34" fill="none" aria-hidden="true" focusable="false">
-          <path d="M18.2 5.5 9.6 27h7.8l2.4-6.9h5.9L18.2 5.5Z" fill="#5B5FC7" />
-          <path d="M22 10.6 15.7 27h10.7c1.5 0 2.3-1.7 1.4-2.8L22 10.6Z" fill="#3E42B8" />
-        </svg>
-      ),
-      x: 87.47,
-      y: 41.8,
-      size: 48,
-    },
-    {
-      node: <img src={microsoftSymbol} alt="Microsoft" className={styles.tileImage} />,
-      x: 80.7,
-      y: 81.01,
-      size: 56,
-    },
-    {
-      node: <img src={copilotSymbol} alt="Microsoft Copilot" className={styles.tileImage} />,
-      x: 58.84,
-      y: 81.01,
-      size: 56,
-    },
-    {
-      node: (
-        <svg width="60%" height="60%" viewBox="0 0 34 34" fill="none" aria-hidden="true" focusable="false">
-          <path d="M4.5 9h14.5l10.5 8-10.5 8H4.5l10.5-8L4.5 9Z" fill="#2B74E8" />
-          <path d="M15 9h4l10.5 8L19 25h-4l10.5-8L15 9Z" fill="#6EA8FF" />
-        </svg>
-      ),
-      x: 52.07,
-      y: 41.8,
-      size: 48,
-    },
-  ];
-}
 
 export function AboutHackathonSection() {
   const styles = useStyles();
   const [prerequisitesExpanded, setPrerequisitesExpanded] = useState(false);
-  const tiles = useProductTiles(styles);
 
   return (
     <section className={styles.root} aria-labelledby="about-hackathon-heading">
@@ -252,7 +191,7 @@ export function AboutHackathonSection() {
         </div>
 
         <div className={styles.visual}>
-          <AboutVisual tiles={tiles} />
+          <AboutVisual />
         </div>
       </SurfaceCard>
     </section>
