@@ -12,6 +12,7 @@ import {
   BreadcrumbItem,
   Button,
   makeStyles,
+  mergeClasses,
   tokens,
 } from "@fluentui/react-components";
 import {
@@ -24,19 +25,18 @@ import {
   Certificate20Regular,
   Checkmark16Regular,
   Clock20Regular,
-  Cube20Regular,
   Grid20Regular,
   Lightbulb20Regular,
   Person20Regular,
   PeopleTeam20Regular,
+  PuzzlePiece20Regular,
   TaskListSquareLtr20Regular,
+  Trophy16Filled,
   Trophy20Regular,
 } from "@fluentui/react-icons";
-import type { FluentIcon } from "@fluentui/react-icons";
 import symbolMicrosoft from "../assets/images/symbol-microsoft.svg";
 import symbolCopilot from "../assets/images/symbol-copilot.svg";
 import symbolFabric from "../assets/images/symbol-fabric.png";
-import hackableMark from "../assets/images/hackable-mark.svg";
 import { catalogChallenges } from "../data/catalog";
 import type { Track } from "../types/trackDetail";
 import { CardGrid } from "../components/shared/CardGrid";
@@ -135,8 +135,11 @@ const useStyles = makeStyles({
     flexDirection: "column",
     gap: "16px",
     padding: "16px",
-    borderRadius: tokens.borderRadiusMedium,
+    borderRadius: tokens.borderRadiusXLarge,
     border: `${tokens.strokeWidthThin} solid ${tokens.colorNeutralStroke2}`,
+  },
+  trackCardBrowsable: {
+    border: `${tokens.strokeWidthThin} solid ${tokens.colorNeutralStroke1}`,
   },
   trackHeadRow: {
     display: "flex",
@@ -192,223 +195,8 @@ const useStyles = makeStyles({
     gap: tokens.spacingHorizontalS,
     flexWrap: "wrap",
   },
-  processLayout: {
-    display: "grid",
-    gridTemplateColumns: "minmax(280px, 360px) minmax(0, 1fr)",
-    gap: "16px",
-    alignItems: "stretch",
-    "@media (max-width: 900px)": {
-      gridTemplateColumns: "minmax(0, 1fr)",
-    },
-  },
-  processVisual: {
-    position: "relative",
-    minHeight: "220px",
-    borderRadius: tokens.borderRadiusLarge,
-    border: `${tokens.strokeWidthThin} solid ${tokens.colorNeutralStroke2}`,
-    backgroundColor: tokens.colorNeutralBackground1,
-    overflow: "hidden",
-    boxShadow: tokens.shadow8,
-  },
-  visualGrid: {
-    position: "absolute",
-    inset: 0,
-    backgroundImage: `radial-gradient(circle, ${tokens.colorNeutralStroke2} 1px, transparent 1px)`,
-    backgroundSize: "18px 18px",
-    opacity: 0.42,
-  },
-  processRing: {
-    position: "absolute",
-    left: "50%",
-    top: "50%",
-    width: "180px",
-    height: "180px",
-    borderRadius: tokens.borderRadiusCircular,
-    border: `${tokens.strokeWidthThin} solid ${tokens.colorBrandStroke2}`,
-    transform: "translate(-50%, -50%) rotate(-16deg)",
-    opacity: 0.42,
-  },
-  processCore: {
-    position: "absolute",
-    left: "50%",
-    top: "50%",
-    width: "72px",
-    height: "72px",
-    borderRadius: tokens.borderRadiusCircular,
-    transform: "translate(-50%, -50%)",
-    backgroundColor: tokens.colorNeutralBackground1,
-    boxShadow: tokens.shadow16,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  processCoreImage: {
-    width: "34px",
-    height: "34px",
-  },
-  processNode: {
-    position: "absolute",
-    width: "52px",
-    height: "52px",
-    borderRadius: tokens.borderRadiusLarge,
-    backgroundColor: tokens.colorNeutralBackground1,
-    border: `${tokens.strokeWidthThin} solid ${tokens.colorNeutralStroke2}`,
-    boxShadow: tokens.shadow8,
-    color: tokens.colorBrandForeground1,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: "22px",
-  },
-  processNodeOne: {
-    left: "32px",
-    top: "32px",
-  },
-  processNodeTwo: {
-    right: "36px",
-    top: "48px",
-  },
-  processNodeThree: {
-    left: "58px",
-    bottom: "34px",
-  },
-  productOrbit: {
-    position: "absolute",
-    right: "24px",
-    bottom: "24px",
-    display: "flex",
-    gap: tokens.spacingHorizontalXS,
-  },
-  productTile: {
-    width: "36px",
-    height: "36px",
-    borderRadius: tokens.borderRadiusMedium,
-    backgroundColor: tokens.colorNeutralBackground1,
-    border: `${tokens.strokeWidthThin} solid ${tokens.colorNeutralStroke2}`,
-    boxShadow: tokens.shadow8,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  productImage: {
-    width: "16px",
-    height: "16px",
-    objectFit: "contain",
-  },
-  trackSectionGrid: {
-    display: "grid",
-    gridTemplateColumns: "minmax(0, 1fr) minmax(260px, 340px)",
-    gap: "16px",
-    alignItems: "stretch",
-    "@media (max-width: 980px)": {
-      gridTemplateColumns: "minmax(0, 1fr)",
-    },
-  },
-  trackColumn: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "16px",
-    minWidth: 0,
-  },
-  trackVisual: {
-    position: "relative",
-    display: "flex",
-    flexDirection: "column",
-    minHeight: "300px",
-    borderRadius: tokens.borderRadiusLarge,
-    border: `${tokens.strokeWidthThin} solid ${tokens.colorNeutralStroke2}`,
-    backgroundColor: tokens.colorNeutralBackground1,
-    boxShadow: tokens.shadow8,
-    overflow: "hidden",
-  },
-  trackCover: {
-    position: "absolute",
-    inset: 0,
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-    opacity: 0.16,
-  },
-  trackVisualWash: {
-    position: "absolute",
-    inset: 0,
-    backgroundImage: `linear-gradient(145deg, ${tokens.colorNeutralBackground1} 8%, ${tokens.colorBrandBackground2} 100%)`,
-  },
-  trackCore: {
-    position: "absolute",
-    left: "50%",
-    top: "38%",
-    transform: "translate(-50%, -50%)",
-    width: "80px",
-    height: "80px",
-    borderRadius: tokens.borderRadiusCircular,
-    backgroundColor: tokens.colorNeutralBackground1,
-    boxShadow: tokens.shadow16,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  trackCoreImage: {
-    width: "38px",
-    height: "38px",
-  },
-  trackMetric: {
-    position: "relative",
-    zIndex: 1,
-    margin: "auto 16px 16px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: tokens.spacingHorizontalS,
-    padding: "12px",
-    borderRadius: tokens.borderRadiusLarge,
-    backgroundColor: tokens.colorNeutralBackground1,
-    boxShadow: tokens.shadow8,
-    border: `${tokens.strokeWidthThin} solid ${tokens.colorNeutralStroke2}`,
-  },
-  trackMetricValue: {
-    fontFamily: tokens.fontFamilyBase,
-    fontSize: tokens.fontSizeBase600,
-    lineHeight: tokens.lineHeightBase600,
-    fontWeight: tokens.fontWeightSemibold,
-    color: tokens.colorBrandForeground1,
-  },
-  trackMetricLabel: {
-    fontFamily: tokens.fontFamilyBase,
-    fontSize: tokens.fontSizeBase200,
-    lineHeight: tokens.lineHeightBase200,
-    color: tokens.colorNeutralForeground3,
-  },
-  trackIconStrip: {
-    display: "flex",
-    alignItems: "center",
-    gap: tokens.spacingHorizontalXS,
-  },
-  trackNode: {
-    position: "absolute",
-    width: "44px",
-    height: "44px",
-    borderRadius: tokens.borderRadiusCircular,
-    backgroundColor: tokens.colorNeutralBackground1,
-    border: `${tokens.strokeWidthThin} solid ${tokens.colorNeutralStroke2}`,
-    boxShadow: tokens.shadow8,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: tokens.colorBrandForeground1,
-    fontSize: "18px",
-  },
-  trackNodeOne: {
-    left: "30px",
-    top: "36px",
-  },
-  trackNodeTwo: {
-    right: "32px",
-    top: "46px",
-  },
-  trackNodeThree: {
-    right: "88px",
-    bottom: "116px",
+  metaDot: {
+    color: tokens.colorNeutralForeground4,
   },
 });
 
@@ -417,119 +205,6 @@ function stepStatusFor(isCompleted: boolean, isNext: boolean): Step["status"] {
   if (isCompleted) return "complete";
   if (isNext) return "current";
   return "upcoming";
-}
-
-function processIconFor(title: string): FluentIcon {
-  const normalized = title.toLowerCase();
-
-  if (normalized.includes("register") || normalized.includes("profile")) {
-    return Person20Regular;
-  }
-
-  if (normalized.includes("certify")) {
-    return Certificate20Regular;
-  }
-
-  if (normalized.includes("win") || normalized.includes("present")) {
-    return Trophy20Regular;
-  }
-
-  if (normalized.includes("progress")) {
-    return TaskListSquareLtr20Regular;
-  }
-
-  if (normalized.includes("team")) {
-    return PeopleTeam20Regular;
-  }
-
-  return Cube20Regular;
-}
-
-interface VisualProcessStep {
-  title: string;
-  description: string;
-  icon: FluentIcon;
-}
-
-function ProductIconStrip({ className }: { className?: string }) {
-  const styles = useStyles();
-
-  return (
-    <div className={className ?? styles.trackIconStrip} aria-hidden="true">
-      {productSymbols.map((symbol) => (
-        <span className={styles.productTile} key={symbol.alt}>
-          <img src={symbol.src} alt="" className={styles.productImage} />
-        </span>
-      ))}
-    </div>
-  );
-}
-
-function ProcessIllustration({ steps }: { steps: VisualProcessStep[] }) {
-  const styles = useStyles();
-  const [first, second, third] = steps;
-  const FirstIcon = first?.icon ?? Person20Regular;
-  const SecondIcon = second?.icon ?? Cube20Regular;
-  const ThirdIcon = third?.icon ?? Trophy20Regular;
-
-  return (
-    <div className={styles.processVisual} aria-hidden="true">
-      <div className={styles.visualGrid} />
-      <div className={styles.processRing} />
-      <span className={`${styles.processNode} ${styles.processNodeOne}`}>
-        <FirstIcon />
-      </span>
-      <span className={`${styles.processNode} ${styles.processNodeTwo}`}>
-        <SecondIcon />
-      </span>
-      <span className={`${styles.processNode} ${styles.processNodeThree}`}>
-        <ThirdIcon />
-      </span>
-      <span className={styles.processCore}>
-        <img src={hackableMark} alt="" className={styles.processCoreImage} />
-      </span>
-      <ProductIconStrip className={styles.productOrbit} />
-    </div>
-  );
-}
-
-function TrackIllustration({
-  cover,
-  completedCount,
-  totalCount,
-}: {
-  cover: string;
-  completedCount: number;
-  totalCount: number;
-}) {
-  const styles = useStyles();
-
-  return (
-    <div className={styles.trackVisual} aria-hidden="true">
-      <img src={cover} alt="" className={styles.trackCover} />
-      <div className={styles.trackVisualWash} />
-      <div className={styles.visualGrid} />
-      <span className={`${styles.trackNode} ${styles.trackNodeOne}`}>
-        <TaskListSquareLtr20Regular />
-      </span>
-      <span className={`${styles.trackNode} ${styles.trackNodeTwo}`}>
-        <CalendarClock20Regular />
-      </span>
-      <span className={`${styles.trackNode} ${styles.trackNodeThree}`}>
-        <Trophy20Regular />
-      </span>
-      <span className={styles.trackCore}>
-        <img src={hackableMark} alt="" className={styles.trackCoreImage} />
-      </span>
-      <div className={styles.trackMetric}>
-        <div>
-          <div className={styles.trackMetricValue}>{completedCount}/{totalCount}</div>
-          <div className={styles.trackMetricLabel}>Milestones</div>
-        </div>
-        <ProductIconStrip />
-      </div>
-    </div>
-  );
 }
 
 export function TrackDetailPage() {
@@ -619,7 +294,7 @@ export function TrackDetailPage() {
       id: "technologies",
       label: "Technologies",
       value: `${detail.techTags.length} services`,
-      icon: Cube20Regular,
+      icon: PuzzlePiece20Regular,
     },
   ];
 
@@ -644,10 +319,6 @@ export function TrackDetailPage() {
     ...new Set(detail.tracks.flatMap((track) => track.milestones.map((milestone) => milestone.title))),
   ];
   const totalMilestones = detail.tracks.reduce((sum, track) => sum + track.milestones.length, 0);
-  const processSteps = detail.processSteps.map((step) => ({ ...step, icon: processIconFor(step.title) }));
-  const visualTrack = enrolledTrack ?? detail.tracks[0];
-  const visualTrackCompleted = enrolledTrack && progress ? progress.completed : 0;
-  const visualTrackTotal = visualTrack?.milestones.length ?? 0;
 
   return (
     <div className={styles.root}>
@@ -818,12 +489,14 @@ export function TrackDetailPage() {
         id="technology"
         title="Technology Stack"
         description="Pre-provisioned services and tools available inside the skilling sandbox. Participants explore each technology hands-on with scoped credentials and guided checkpoints."
-        icon={Cube20Regular}
+        icon={PuzzlePiece20Regular}
       >
         <div style={{ display: "flex", flexWrap: "wrap", gap: tokens.spacingHorizontalXS }}>
-          <Tag tone="brand">{challenge.industry}</Tag>
+          <Tag tone="brand" size="sm">
+            {challenge.industry}
+          </Tag>
           {detail.techTags.map((tag) => (
-            <Tag key={tag} tone="brand">
+            <Tag key={tag} tone="brand" size="sm">
               {tag}
             </Tag>
           ))}
@@ -880,86 +553,81 @@ export function TrackDetailPage() {
         id="tracks"
         title={enrolledTrack ? "Your Track" : "Choose a Track"}
         description="Enrolling means picking one track. Progress is tracked per track."
-        icon={Cube20Regular}
+        icon={PuzzlePiece20Regular}
       >
-        <div className={styles.trackSectionGrid}>
-          <div className={styles.trackColumn}>
-            {enrolledTrack && progress ? (
-              <div className={styles.trackCard}>
-                <div className={styles.trackHeadRow}>
-                  <div className={styles.trackCopy}>
-                    <span className={styles.trackEyebrow}>
-                      Track {enrolledTrack.index} · {enrolledTrack.subtitle}
-                    </span>
-                    <h3 className={styles.trackTitle}>{enrolledTrack.title}</h3>
-                  </div>
-                  <Button appearance="subtle" onClick={withdraw}>
-                    Withdraw
-                  </Button>
-                </div>
-
-                <ProgressMeter
-                  percent={progress.percent}
-                  label="Milestones complete"
-                  caption={`${progress.completed} of ${progress.total}`}
-                />
-
-                <StepList
-                  ariaLabel={`Track ${enrolledTrack.index} milestones`}
-                  steps={enrolledTrack.milestones.map((milestone, index) => {
-                    const isCompleted = completed.has(milestone.id);
-                    const isNext = progress.next?.id === milestone.id;
-                    return {
-                      id: milestone.id,
-                      title: milestone.title,
-                      status: stepStatusFor(isCompleted, isNext),
-                      meta: (
-                        <div className={styles.milestoneRow}>
-                          <span className={styles.metaItem}>≈{formatDuration(milestone.estimateMinutes)}</span>
-                          {index === 0 && milestone.xp ? (
-                            <span className={styles.xpBadgeWrap}>
-                              <Badge appearance="tint" color="warning" size="small">
-                                {milestone.xp} XP
-                              </Badge>
-                            </span>
-                          ) : null}
-                          <Button
-                            appearance="subtle"
-                            size="small"
-                            onClick={() => toggleMilestone(enrolledTrack.id, milestone.id)}
-                          >
-                            {isCompleted ? "Reset" : "Advance"}
-                          </Button>
-                        </div>
-                      ),
-                    };
-                  })}
-                />
+        {enrolledTrack && progress ? (
+          <div className={styles.trackCard}>
+            <div className={styles.trackHeadRow}>
+              <div className={styles.trackCopy}>
+                <span className={styles.trackEyebrow}>
+                  Track {enrolledTrack.index} · {enrolledTrack.subtitle}
+                </span>
+                <h3 className={styles.trackTitle}>{enrolledTrack.title}</h3>
               </div>
-            ) : null}
+              <Button appearance="subtle" onClick={withdraw}>
+                Withdraw
+              </Button>
+            </div>
 
-            {detail.tracks
-              .filter((track) => track.id !== enrolledTrack?.id)
-              .map((track) => (
-                <TrackCard
-                  key={track.id}
-                  track={track}
-                  canEnrol={registrationOpen}
-                  isEnrolledElsewhere={Boolean(enrolledTrack)}
-                  onEnrol={() => enrol(track.id)}
-                />
-              ))}
+            <ProgressMeter
+              percent={progress.percent}
+              label="Milestones complete"
+              caption={`${progress.completed} of ${progress.total}`}
+            />
+
+            <StepList
+              ariaLabel={`Track ${enrolledTrack.index} milestones`}
+              steps={enrolledTrack.milestones.map((milestone, index) => {
+                const isCompleted = completed.has(milestone.id);
+                const isNext = progress.next?.id === milestone.id;
+                return {
+                  id: milestone.id,
+                  title: milestone.title,
+                  description: milestone.description,
+                  status: stepStatusFor(isCompleted, isNext),
+                  meta: (
+                    <div className={styles.milestoneRow}>
+                      <span className={styles.metaItem}>≈{formatDuration(milestone.estimateMinutes)}</span>
+                      <Button
+                        appearance="subtle"
+                        size="small"
+                        onClick={() => toggleMilestone(enrolledTrack.id, milestone.id)}
+                      >
+                        {isCompleted ? "Reset" : "Advance"}
+                      </Button>
+                      {index === 0 && milestone.xp ? (
+                        <Badge appearance="tint" color="warning" size="medium" icon={<Trophy16Filled />}>
+                          {milestone.xp} XP
+                        </Badge>
+                      ) : null}
+                    </div>
+                  ),
+                };
+              })}
+            />
           </div>
+        ) : null}
 
-          <TrackIllustration cover={challenge.cover} completedCount={visualTrackCompleted} totalCount={visualTrackTotal} />
-        </div>
+        {detail.tracks
+          .filter((track) => track.id !== enrolledTrack?.id)
+          .map((track) => (
+            <TrackCard
+              key={track.id}
+              track={track}
+              canEnrol={registrationOpen}
+              isEnrolledElsewhere={Boolean(enrolledTrack)}
+              onEnrol={() => enrol(track.id)}
+            />
+          ))}
       </SectionCard>
 
-      <SectionCard id="process" title={detail.processTitle} description={detail.processDescription} icon={CalendarClock20Regular}>
-        <div className={styles.processLayout}>
-          <ProcessIllustration steps={processSteps} />
-          <NumberedSteps steps={processSteps} ariaLabel={`How ${challenge.format} events run`} />
-        </div>
+      <SectionCard
+        id="process"
+        title={detail.processTitle}
+        description={detail.processDescription}
+        icon={CalendarClock20Regular}
+      >
+        <NumberedSteps steps={detail.processSteps} ariaLabel={`How ${challenge.format} events run`} />
       </SectionCard>
 
       {related.length > 0 ? (
@@ -1007,7 +675,7 @@ function TrackCard({ track, canEnrol, isEnrolledElsewhere, onEnrol }: TrackCardP
   const totalMinutes = track.milestones.reduce((sum, milestone) => sum + milestone.estimateMinutes, 0);
 
   return (
-    <div className={styles.trackCard}>
+    <div className={mergeClasses(styles.trackCard, styles.trackCardBrowsable)}>
       <div className={styles.trackHeadRow}>
         <div className={styles.trackCopy}>
           <span className={styles.trackEyebrow}>Track {track.index}</span>
@@ -1028,6 +696,9 @@ function TrackCard({ track, canEnrol, isEnrolledElsewhere, onEnrol }: TrackCardP
         <span className={styles.metaItem}>
           <TaskListSquareLtr20Regular />
           {track.milestones.length} milestones
+        </span>
+        <span className={styles.metaDot} aria-hidden="true">
+          ·
         </span>
         <span className={styles.metaItem}>
           <Clock20Regular />≈{formatDuration(totalMinutes)} total

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { makeStyles, mergeClasses, tokens } from "@fluentui/react-components";
-import { Checkmark12Filled, Circle12Regular, ArrowRight12Filled } from "@fluentui/react-icons";
+import { CheckmarkCircle16Filled, Circle12Regular } from "@fluentui/react-icons";
 
 export type StepStatus = "complete" | "current" | "upcoming";
 
@@ -49,19 +49,14 @@ const useStyles = makeStyles({
     width: "24px",
     height: "24px",
     borderRadius: tokens.borderRadiusCircular,
+    backgroundColor: tokens.colorNeutralBackground3,
     zIndex: 1,
   },
   markerComplete: {
-    backgroundColor: tokens.colorBrandBackground,
-    color: tokens.colorNeutralForegroundOnBrand,
+    color: tokens.colorBrandForeground1,
   },
-  markerCurrent: {
-    backgroundColor: tokens.colorBrandBackground2,
-    color: tokens.colorBrandForeground2,
-  },
-  markerUpcoming: {
-    backgroundColor: tokens.colorNeutralBackground3,
-    color: tokens.colorNeutralForeground3,
+  markerIncomplete: {
+    color: tokens.colorNeutralForeground4,
   },
   copy: {
     display: "flex",
@@ -118,18 +113,8 @@ export function StepList({ steps, ariaLabel }: StepListProps) {
     <ol className={styles.list} {...(ariaLabel ? { "aria-label": ariaLabel } : {})}>
       {steps.map((step, index) => {
         const isLast = index === steps.length - 1;
-
-        const markerClass = {
-          complete: styles.markerComplete,
-          current: styles.markerCurrent,
-          upcoming: styles.markerUpcoming,
-        }[step.status];
-
-        const MarkerIcon = {
-          complete: Checkmark12Filled,
-          current: ArrowRight12Filled,
-          upcoming: Circle12Regular,
-        }[step.status];
+        const isComplete = step.status === "complete";
+        const MarkerIcon = isComplete ? CheckmarkCircle16Filled : Circle12Regular;
 
         return (
           <li
@@ -140,7 +125,7 @@ export function StepList({ steps, ariaLabel }: StepListProps) {
               step.status === "complete" && styles.connectorComplete,
             )}
           >
-            <span className={mergeClasses(styles.marker, markerClass)}>
+            <span className={mergeClasses(styles.marker, isComplete ? styles.markerComplete : styles.markerIncomplete)}>
               <MarkerIcon />
             </span>
 

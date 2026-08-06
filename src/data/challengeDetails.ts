@@ -1,21 +1,36 @@
+import processRegister from "../assets/images/process-register.svg";
+import processBuild from "../assets/images/process-build.svg";
+import processWin from "../assets/images/process-win.svg";
 import type { ChallengeDetail } from "../types/trackDetail";
 
 const HIAD_PROCESS: ChallengeDetail["processSteps"] = [
-  { title: "Register", description: "Create your participant profile." },
-  { title: "Build", description: "Develop inside an isolated Azure environment." },
-  { title: "Win", description: "Earn XP, badges, and recognition." },
+  { title: "Register", description: "Create your participant profile.", illustration: processRegister },
+  { title: "Build", description: "Develop inside an isolated Azure environment.", illustration: processBuild },
+  { title: "Win", description: "Earn XP, badges, and recognition.", illustration: processWin },
 ];
 
 const HTS_PROCESS: ChallengeDetail["processSteps"] = [
-  { title: "Register", description: "Create your participant profile and pick a track." },
-  { title: "Progress", description: "Clear milestones at your own pace inside the sandbox." },
-  { title: "Certify", description: "Earn XP, badges, and a completion credential." },
+  {
+    title: "Register",
+    description: "Create your participant profile and pick a track.",
+    illustration: processRegister,
+  },
+  {
+    title: "Progress",
+    description: "Clear milestones at your own pace inside the sandbox.",
+    illustration: processBuild,
+  },
+  { title: "Certify", description: "Earn XP, badges, and a completion credential.", illustration: processWin },
 ];
 
 const HTB_PROCESS: ChallengeDetail["processSteps"] = [
-  { title: "Team up", description: "Form or get matched into a team of 3-5." },
-  { title: "Build", description: "Design and ship a working solution across the event." },
-  { title: "Present", description: "Demo to a judging panel for recognition and prizes." },
+  { title: "Team up", description: "Form or get matched into a team of 3-5.", illustration: processRegister },
+  {
+    title: "Build",
+    description: "Design and ship a working solution across the event.",
+    illustration: processBuild,
+  },
+  { title: "Present", description: "Demo to a judging panel for recognition and prizes.", illustration: processWin },
 ];
 
 /**
@@ -49,11 +64,37 @@ export const CHALLENGE_DETAILS: Record<string, ChallengeDetail> = {
         description:
           "Stand up four agents with distinct jobs and wire the hand-offs between them into one AutoGen conversation.",
         milestones: [
-          { id: "set-up-workspace", title: "Set up the workspace", estimateMinutes: 30, xp: 150 },
-          { id: "define-four-agents", title: "Define four agents", estimateMinutes: 60, xp: 200 },
-          { id: "wire-the-conversation", title: "Wire the conversation", estimateMinutes: 60, xp: 200 },
-          { id: "add-the-critic-loop", title: "Add the critic loop", estimateMinutes: 45, xp: 200 },
-          { id: "measure-the-lift", title: "Measure the lift", estimateMinutes: 45, xp: 250 },
+          {
+            id: "set-up-workspace",
+            title: "Set up the workspace",
+            description: "Provision an AI Foundry project and connect your model.",
+            estimateMinutes: 30,
+            xp: 1200,
+          },
+          {
+            id: "define-four-agents",
+            title: "Define four agents",
+            description: "Write focused system prompts for researcher, drafter, analyst, critic.",
+            estimateMinutes: 60,
+          },
+          {
+            id: "wire-the-conversation",
+            title: "Wire the conversation",
+            description: "Orchestrate the hand-offs with AutoGen group chat.",
+            estimateMinutes: 60,
+          },
+          {
+            id: "add-the-critic-loop",
+            title: "Add the critic loop",
+            description: "Let the critic send work back and cap the iterations.",
+            estimateMinutes: 45,
+          },
+          {
+            id: "measure-the-lift",
+            title: "Measure the lift",
+            description: "Score output with and without the critic and record the difference.",
+            estimateMinutes: 45,
+          },
         ],
       },
       {
@@ -63,10 +104,30 @@ export const CHALLENGE_DETAILS: Record<string, ChallengeDetail> = {
         subtitle: "Retrieval and pricing",
         description: "Stop the crew inventing capabilities and prices you do not have.",
         milestones: [
-          { id: "index-your-collateral", title: "Index your collateral", estimateMinutes: 60, xp: 200 },
-          { id: "ground-the-drafter", title: "Ground the drafter", estimateMinutes: 60, xp: 200 },
-          { id: "constrain-the-pricing", title: "Constrain the pricing", estimateMinutes: 45, xp: 200 },
-          { id: "re-run-the-critic-loop", title: "Re-run the critic loop", estimateMinutes: 45, xp: 200 },
+          {
+            id: "index-your-collateral",
+            title: "Index your collateral",
+            description: "Load capability sheets and past proposals into retrieval.",
+            estimateMinutes: 60,
+          },
+          {
+            id: "ground-the-drafter",
+            title: "Ground the drafter",
+            description: "Require every claim to cite an indexed source.",
+            estimateMinutes: 60,
+          },
+          {
+            id: "constrain-the-pricing",
+            title: "Constrain the pricing",
+            description: "Pull rates from the price book instead of letting the model guess.",
+            estimateMinutes: 45,
+          },
+          {
+            id: "re-run-the-critic-loop",
+            title: "Re-run the critic loop",
+            description: "Confirm the grounded draft still clears the critic's checks.",
+            estimateMinutes: 45,
+          },
         ],
       },
     ],
@@ -95,9 +156,25 @@ export const CHALLENGE_DETAILS: Record<string, ChallengeDetail> = {
         subtitle: "Extraction and routing",
         description: "Turn a raw transcript into filed, owned action items.",
         milestones: [
-          { id: "parse-the-transcript", title: "Parse the transcript", estimateMinutes: 30, xp: 150 },
-          { id: "extract-commitments", title: "Extract commitments", estimateMinutes: 45, xp: 200 },
-          { id: "route-to-tracker", title: "Route to the tracker", estimateMinutes: 45, xp: 200 },
+          {
+            id: "parse-the-transcript",
+            title: "Parse the transcript",
+            description: "Load a sample transcript and split it into speaker turns.",
+            estimateMinutes: 30,
+            xp: 900,
+          },
+          {
+            id: "extract-commitments",
+            title: "Extract commitments",
+            description: "Pull out owner, action, and due date for each commitment.",
+            estimateMinutes: 45,
+          },
+          {
+            id: "route-to-tracker",
+            title: "Route to the tracker",
+            description: "File each extracted item into the task tracker via its API.",
+            estimateMinutes: 45,
+          },
         ],
       },
     ],
@@ -127,11 +204,37 @@ export const CHALLENGE_DETAILS: Record<string, ChallengeDetail> = {
         subtitle: "Prototype to production",
         description: "Progress an agent through five graded levels of capability and governance.",
         milestones: [
-          { id: "level-1-single-topic", title: "Level 1 — Single-topic bot", estimateMinutes: 45, xp: 150 },
-          { id: "level-2-multi-topic", title: "Level 2 — Multi-topic routing", estimateMinutes: 60, xp: 200 },
-          { id: "level-3-tool-calling", title: "Level 3 — Tool calling", estimateMinutes: 90, xp: 250 },
-          { id: "level-4-dataverse", title: "Level 4 — Dataverse grounding", estimateMinutes: 90, xp: 250 },
-          { id: "level-5-governance", title: "Level 5 — Governance and handoff", estimateMinutes: 75, xp: 300 },
+          {
+            id: "level-1-single-topic",
+            title: "Level 1 — Single-topic bot",
+            description: "Answer one well-scoped question reliably.",
+            estimateMinutes: 45,
+            xp: 900,
+          },
+          {
+            id: "level-2-multi-topic",
+            title: "Level 2 — Multi-topic routing",
+            description: "Route between several topics without losing context.",
+            estimateMinutes: 60,
+          },
+          {
+            id: "level-3-tool-calling",
+            title: "Level 3 — Tool calling",
+            description: "Call an external action and handle its result.",
+            estimateMinutes: 90,
+          },
+          {
+            id: "level-4-dataverse",
+            title: "Level 4 — Dataverse grounding",
+            description: "Ground responses in live Dataverse records.",
+            estimateMinutes: 90,
+          },
+          {
+            id: "level-5-governance",
+            title: "Level 5 — Governance and handoff",
+            description: "Apply DLP policy and hand the agent to its owning team.",
+            estimateMinutes: 75,
+          },
         ],
       },
     ],
@@ -160,9 +263,25 @@ export const CHALLENGE_DETAILS: Record<string, ChallengeDetail> = {
         subtitle: "Retrieval-grounded answers",
         description: "Connect a copilot to real product and policy data and ship a usable experience.",
         milestones: [
-          { id: "index-product-catalog", title: "Index the product catalog", estimateMinutes: 45, xp: 150 },
-          { id: "wire-grounded-answers", title: "Wire grounded answers", estimateMinutes: 60, xp: 200 },
-          { id: "handle-escalations", title: "Handle escalations", estimateMinutes: 45, xp: 200 },
+          {
+            id: "index-product-catalog",
+            title: "Index the product catalog",
+            description: "Load the product and policy documents into search.",
+            estimateMinutes: 45,
+            xp: 900,
+          },
+          {
+            id: "wire-grounded-answers",
+            title: "Wire grounded answers",
+            description: "Require every answer to cite an indexed passage.",
+            estimateMinutes: 60,
+          },
+          {
+            id: "handle-escalations",
+            title: "Handle escalations",
+            description: "Hand off to a human when confidence is low.",
+            estimateMinutes: 45,
+          },
         ],
       },
     ],
@@ -191,9 +310,25 @@ export const CHALLENGE_DETAILS: Record<string, ChallengeDetail> = {
         subtitle: "Grounding and hand-off",
         description: "Turn a shelf of equipment manuals into an agent technicians actually use.",
         milestones: [
-          { id: "index-the-manuals", title: "Index the manuals", estimateMinutes: 45, xp: 150 },
-          { id: "wire-fault-code-lookup", title: "Wire fault-code lookup", estimateMinutes: 60, xp: 200 },
-          { id: "add-technician-handoff", title: "Add technician hand-off", estimateMinutes: 45, xp: 200 },
+          {
+            id: "index-the-manuals",
+            title: "Index the manuals",
+            description: "Load equipment manuals and fault-code tables into search.",
+            estimateMinutes: 45,
+            xp: 900,
+          },
+          {
+            id: "wire-fault-code-lookup",
+            title: "Wire fault-code lookup",
+            description: "Match a fault code to its manual section and remedy.",
+            estimateMinutes: 60,
+          },
+          {
+            id: "add-technician-handoff",
+            title: "Add technician hand-off",
+            description: "Escalate to a senior technician when the fix isn't in the manual.",
+            estimateMinutes: 45,
+          },
         ],
       },
     ],
@@ -205,8 +340,7 @@ export const CHALLENGE_DETAILS: Record<string, ChallengeDetail> = {
 
   "secure-data-estate-sprint": {
     code: "FY27-C1-H06",
-    scenarioQuote:
-      "Woodgrove Bank, CISO: “We cannot say with confidence where our sensitive data actually lives.”",
+    scenarioQuote: "Woodgrove Bank, CISO: “We cannot say with confidence where our sensitive data actually lives.”",
     scenarioBody: [
       "Sprint through Microsoft Purview to classify, label, and lock down a sensitive data estate in one guided session.",
     ],
@@ -222,9 +356,25 @@ export const CHALLENGE_DETAILS: Record<string, ChallengeDetail> = {
         subtitle: "Purview data governance",
         description: "Discover, classify, and apply protection to sensitive data at rest.",
         milestones: [
-          { id: "run-data-discovery", title: "Run data discovery", estimateMinutes: 60, xp: 150 },
-          { id: "apply-sensitivity-labels", title: "Apply sensitivity labels", estimateMinutes: 60, xp: 200 },
-          { id: "enforce-access-policy", title: "Enforce access policy", estimateMinutes: 60, xp: 200 },
+          {
+            id: "run-data-discovery",
+            title: "Run data discovery",
+            description: "Scan connected sources for sensitive information types.",
+            estimateMinutes: 60,
+            xp: 900,
+          },
+          {
+            id: "apply-sensitivity-labels",
+            title: "Apply sensitivity labels",
+            description: "Auto-label discovered content by classification.",
+            estimateMinutes: 60,
+          },
+          {
+            id: "enforce-access-policy",
+            title: "Enforce access policy",
+            description: "Restrict access to labelled content by policy.",
+            estimateMinutes: 60,
+          },
         ],
       },
     ],
@@ -254,10 +404,31 @@ export const CHALLENGE_DETAILS: Record<string, ChallengeDetail> = {
         subtitle: "Data model to working app",
         description: "Model cases in Dataverse and layer a role-aware app and automations on top.",
         milestones: [
-          { id: "model-the-case-entity", title: "Model the case entity", estimateMinutes: 60, xp: 150 },
-          { id: "build-the-intake-form", title: "Build the intake form", estimateMinutes: 90, xp: 200 },
-          { id: "add-status-automation", title: "Add status automation", estimateMinutes: 90, xp: 200 },
-          { id: "set-role-based-views", title: "Set role-based views", estimateMinutes: 60, xp: 200 },
+          {
+            id: "model-the-case-entity",
+            title: "Model the case entity",
+            description: "Define the case table, statuses, and relationships in Dataverse.",
+            estimateMinutes: 60,
+            xp: 900,
+          },
+          {
+            id: "build-the-intake-form",
+            title: "Build the intake form",
+            description: "Build the form a case worker uses to open a new case.",
+            estimateMinutes: 90,
+          },
+          {
+            id: "add-status-automation",
+            title: "Add status automation",
+            description: "Automate status transitions and owner notifications.",
+            estimateMinutes: 90,
+          },
+          {
+            id: "set-role-based-views",
+            title: "Set role-based views",
+            description: "Scope what each role can see and edit.",
+            estimateMinutes: 60,
+          },
         ],
       },
     ],
@@ -287,9 +458,25 @@ export const CHALLENGE_DETAILS: Record<string, ChallengeDetail> = {
         subtitle: "Conversation to hand-off",
         description: "Design a scoped intake conversation and hand structured data to the clinician's system.",
         milestones: [
-          { id: "scope-the-intake-flow", title: "Scope the intake flow", estimateMinutes: 60, xp: 150 },
-          { id: "build-the-conversation", title: "Build the conversation", estimateMinutes: 90, xp: 200 },
-          { id: "structure-the-handoff", title: "Structure the hand-off", estimateMinutes: 60, xp: 200 },
+          {
+            id: "scope-the-intake-flow",
+            title: "Scope the intake flow",
+            description: "Decide exactly what intake needs to capture, and no more.",
+            estimateMinutes: 60,
+            xp: 900,
+          },
+          {
+            id: "build-the-conversation",
+            title: "Build the conversation",
+            description: "Build the guided conversation that collects it.",
+            estimateMinutes: 90,
+          },
+          {
+            id: "structure-the-handoff",
+            title: "Structure the hand-off",
+            description: "Hand structured intake data to the clinician's system.",
+            estimateMinutes: 60,
+          },
         ],
       },
     ],
@@ -318,9 +505,25 @@ export const CHALLENGE_DETAILS: Record<string, ChallengeDetail> = {
         subtitle: "Network, policy, identity",
         description: "Build the three pillars of a governed landing zone as a repeatable pattern.",
         milestones: [
-          { id: "design-network-topology", title: "Design the network topology", estimateMinutes: 90, xp: 200 },
-          { id: "apply-governance-policy", title: "Apply governance policy", estimateMinutes: 90, xp: 200 },
-          { id: "configure-identity-boundaries", title: "Configure identity boundaries", estimateMinutes: 60, xp: 200 },
+          {
+            id: "design-network-topology",
+            title: "Design the network topology",
+            description: "Lay out hub-and-spoke networking for the estate.",
+            estimateMinutes: 90,
+            xp: 900,
+          },
+          {
+            id: "apply-governance-policy",
+            title: "Apply governance policy",
+            description: "Apply Azure Policy across the management group hierarchy.",
+            estimateMinutes: 90,
+          },
+          {
+            id: "configure-identity-boundaries",
+            title: "Configure identity boundaries",
+            description: "Set subscription-level identity and access boundaries.",
+            estimateMinutes: 60,
+          },
         ],
       },
     ],
@@ -350,10 +553,31 @@ export const CHALLENGE_DETAILS: Record<string, ChallengeDetail> = {
         subtitle: "Ingestion to semantic model",
         description: "Take retail data from raw ingestion through to a governed, reportable semantic model.",
         milestones: [
-          { id: "design-the-lakehouse", title: "Design the lakehouse", estimateMinutes: 120, xp: 250 },
-          { id: "build-ingestion-pipelines", title: "Build ingestion pipelines", estimateMinutes: 180, xp: 300 },
-          { id: "model-the-semantic-layer", title: "Model the semantic layer", estimateMinutes: 180, xp: 300 },
-          { id: "publish-governed-reports", title: "Publish governed reports", estimateMinutes: 120, xp: 250 },
+          {
+            id: "design-the-lakehouse",
+            title: "Design the lakehouse",
+            description: "Lay out the medallion architecture in OneLake.",
+            estimateMinutes: 120,
+            xp: 1500,
+          },
+          {
+            id: "build-ingestion-pipelines",
+            title: "Build ingestion pipelines",
+            description: "Land source data on a schedule into the bronze layer.",
+            estimateMinutes: 180,
+          },
+          {
+            id: "model-the-semantic-layer",
+            title: "Model the semantic layer",
+            description: "Build a governed semantic model over the gold layer.",
+            estimateMinutes: 180,
+          },
+          {
+            id: "publish-governed-reports",
+            title: "Publish governed reports",
+            description: "Publish reports with row-level security applied.",
+            estimateMinutes: 120,
+          },
         ],
       },
     ],
@@ -383,9 +607,25 @@ export const CHALLENGE_DETAILS: Record<string, ChallengeDetail> = {
         subtitle: "Identity, device, network",
         description: "Layer conditional access, device compliance, and micro-segmentation into one architecture.",
         milestones: [
-          { id: "design-conditional-access", title: "Design conditional access", estimateMinutes: 120, xp: 250 },
-          { id: "enforce-device-compliance", title: "Enforce device compliance", estimateMinutes: 120, xp: 250 },
-          { id: "segment-the-network", title: "Segment the network", estimateMinutes: 150, xp: 300 },
+          {
+            id: "design-conditional-access",
+            title: "Design conditional access",
+            description: "Design risk-based conditional access policies.",
+            estimateMinutes: 120,
+            xp: 1500,
+          },
+          {
+            id: "enforce-device-compliance",
+            title: "Enforce device compliance",
+            description: "Require compliant, managed devices for sensitive access.",
+            estimateMinutes: 120,
+          },
+          {
+            id: "segment-the-network",
+            title: "Segment the network",
+            description: "Micro-segment the network so a breach cannot spread.",
+            estimateMinutes: 150,
+          },
         ],
       },
     ],
@@ -415,9 +655,25 @@ export const CHALLENGE_DETAILS: Record<string, ChallengeDetail> = {
         subtitle: "Sensor data to dashboard",
         description: "Stream plant sensor data into Fabric and surface it as a live sustainability dashboard.",
         milestones: [
-          { id: "stream-sensor-data", title: "Stream sensor data", estimateMinutes: 150, xp: 250 },
-          { id: "compute-emissions-metrics", title: "Compute emissions metrics", estimateMinutes: 150, xp: 300 },
-          { id: "publish-the-dashboard", title: "Publish the dashboard", estimateMinutes: 120, xp: 250 },
+          {
+            id: "stream-sensor-data",
+            title: "Stream sensor data",
+            description: "Stream plant sensor readings into Fabric in near real time.",
+            estimateMinutes: 150,
+            xp: 1500,
+          },
+          {
+            id: "compute-emissions-metrics",
+            title: "Compute emissions metrics",
+            description: "Turn raw readings into standard emissions metrics.",
+            estimateMinutes: 150,
+          },
+          {
+            id: "publish-the-dashboard",
+            title: "Publish the dashboard",
+            description: "Publish a live dashboard for the sustainability team.",
+            estimateMinutes: 120,
+          },
         ],
       },
     ],

@@ -1,7 +1,9 @@
 export interface Milestone {
   id: string;
   title: string;
-  /** Rendered as the marker's connector line and the "≈" duration in the step list. */
+  /** One line describing what this milestone involves, shown under the title in the step list. */
+  description: string;
+  /** Rendered as the "≈" duration in the step list. */
   estimateMinutes: number;
   /** XP awarded on completion, shown as a small badge under the first milestone. */
   xp?: number;
@@ -19,6 +21,8 @@ export interface Track {
 export interface ProcessStep {
   title: string;
   description: string;
+  /** Illustration artwork shown above the label. */
+  illustration: string;
 }
 
 export interface RelatedItem {
