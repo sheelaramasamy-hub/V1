@@ -16,6 +16,7 @@ import {
   type CatalogSort,
 } from "../data/catalog";
 
+
 const useStyles = makeStyles({
   root: {
     display: "flex",
