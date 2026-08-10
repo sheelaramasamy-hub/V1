@@ -33,12 +33,16 @@ export function SurfaceCard({
   children: ReactNode;
   className?: string;
   elevation?: "default" | "high";
-  as?: "div" | "section";
-} & React.HTMLAttributes<HTMLElement>) {
+  as?: "div" | "section" | "button";
+} & React.HTMLAttributes<HTMLElement> & { type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"] }) {
   const styles = useStyles();
 
   return (
-    <Tag className={mergeClasses(styles.root, elevation === "high" && styles.high, className)} {...rest}>
+    <Tag
+      {...(Tag === "button" ? { type: "button" } : {})}
+      className={mergeClasses(styles.root, elevation === "high" && styles.high, className)}
+      {...rest}
+    >
       {children}
     </Tag>
   );

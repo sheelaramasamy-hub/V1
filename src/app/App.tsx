@@ -3,7 +3,12 @@ import { AppLayout } from "../layouts/AppLayout";
 import { HomePage } from "../pages/HomePage";
 import { AllTracksPage } from "../pages/AllTracksPage";
 import { TrackDetailPage } from "../pages/TrackDetailPage";
-import { PlaceholderPage } from "../pages/PlaceholderPage";
+import { ResourcesPage } from "../pages/ResourcesPage";
+import { LeaderboardPage } from "../pages/LeaderboardPage";
+import { WorkshopsPage } from "../pages/WorkshopsPage";
+import { FeedbackPage } from "../pages/FeedbackPage";
+import { SupportPage } from "../pages/SupportPage";
+import { FaqPage } from "../pages/FaqPage";
 
 export default function App() {
   return (
@@ -12,12 +17,12 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/tracks" element={<AllTracksPage />} />
         <Route path="/tracks/:id" element={<TrackDetailPage />} />
-        <Route path="/resources" element={<PlaceholderPage title="Resources" />} />
-        <Route path="/leaderboard" element={<PlaceholderPage title="Leaderboard" />} />
-        <Route path="/workshop" element={<PlaceholderPage title="Workshop" />} />
-        <Route path="/feedback" element={<PlaceholderPage title="Feedback" />} />
-        <Route path="/support" element={<PlaceholderPage title="Support" />} />
-        <Route path="/faq" element={<PlaceholderPage title="FAQ" />} />
+        <Route path="/resources" element={<ResourcesPage />} />
+        <Route path="/leaderboard" element={<LeaderboardPage />} />
+        <Route path="/workshop" element={<WorkshopsPage />} />
+        <Route path="/feedback" element={<FeedbackPage />} />
+        <Route path="/support" element={<SupportPage />} />
+        <Route path="/faq" element={<FaqPage />} />
       </Route>
     </Routes>
   );
