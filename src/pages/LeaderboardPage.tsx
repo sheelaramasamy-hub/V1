@@ -2,7 +2,14 @@ import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
 import { MessageBar, MessageBarBody, MessageBarTitle, makeStyles, mergeClasses, tokens } from "@fluentui/react-components";
 import type { FluentIcon } from "@fluentui/react-icons";
-import { ArrowClockwise20Regular, ArrowDown12Filled, ArrowUp12Filled, Crown16Filled, Medal16Filled } from "@fluentui/react-icons";
+import {
+  ArrowClockwise20Regular,
+  ArrowDown12Filled,
+  ArrowUp12Filled,
+  ChevronRight12Filled,
+  Crown16Filled,
+  Medal16Filled,
+} from "@fluentui/react-icons";
 import { PageBanner, PageBannerButton } from "../components/shared/PageBanner";
 import { SurfaceCard } from "../components/shared/SurfaceCard";
 import { leaderboardEntries, yourTeamRank, type LeaderboardEntry } from "../data/leaderboard";
@@ -61,66 +68,76 @@ const useStyles = makeStyles({
     },
   },
   /**
-   * The tier wash, border, and rank-badge colour are all set inline per card (see PODIUM_TIERS) —
-   * Griffel classes are static, and the medal colour is data-driven per place. This class only
-   * owns the structural shape every tier shares.
+   * One continuous soft surface, not a hard-edged colour block sitting on white — two blurred
+   * colour pools near the top corners that dissolve into white by the lower third. That diffuse
+   * fade is what makes the reference read as "airy"; a crisp band with a seam is what didn't.
+   * The tier wash/accent are set inline per card (see PODIUM_TIERS).
    */
   podiumCard: {
     position: "relative",
-    display: "grid",
-    justifyItems: "center",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
     gap: tokens.spacingVerticalXXS,
-    minHeight: "188px",
-    padding: `${tokens.spacingVerticalXXL} ${tokens.spacingHorizontalM} ${tokens.spacingVerticalL}`,
-    textAlign: "center",
-    // A soft diagonal wash across the whole card, tier colour fading to white — the same "linear
-    // gradient, full surface, airy" treatment as the newsletter/insights banners, kept
-    // monochromatic per medal so it still reads as gold/silver/bronze rather than a generic tint.
-    backgroundImage:
-      "linear-gradient(135deg, var(--tier-wash) 0%, color-mix(in srgb, var(--tier-wash) 45%, white) 45%, #ffffff 100%)",
-    borderRadius: tokens.borderRadiusLarge,
+    overflow: "hidden",
+    borderRadius: "20px",
     border: `${tokens.strokeWidthThin} solid var(--tier-border)`,
-    boxShadow: tokens.shadow4,
+    boxShadow: tokens.shadow8,
+    backgroundColor: "#ffffff",
+    backgroundImage:
+      "radial-gradient(120% 65% at 15% -10%, var(--tier-wash) 0%, transparent 60%), " +
+      "radial-gradient(100% 60% at 100% 0%, color-mix(in srgb, var(--tier-wash) 55%, var(--tier-accent)) 0%, transparent 55%)",
+    padding: `${tokens.spacingVerticalXL} ${tokens.spacingHorizontalM} ${tokens.spacingVerticalL}`,
+    textAlign: "center",
+    minHeight: "228px",
   },
   podiumCardFirst: {
-    minHeight: "216px",
-    paddingTop: "36px",
-    boxShadow: tokens.shadow16,
+    boxShadow: tokens.shadow28,
+    paddingTop: tokens.spacingVerticalXXL,
+    minHeight: "256px",
   },
   rankBadge: {
     position: "absolute",
-    top: "-14px",
+    top: tokens.spacingVerticalM,
+    left: tokens.spacingHorizontalM,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    width: "30px",
-    height: "30px",
+    width: "26px",
+    height: "26px",
     borderRadius: tokens.borderRadiusCircular,
-    backgroundColor: "var(--tier-accent)",
-    color: "#ffffff",
-    border: `3px solid ${tokens.colorNeutralBackground2}`,
+    backgroundColor: "#ffffff",
+    color: "var(--tier-accent)",
     boxShadow: tokens.shadow4,
     fontFamily: tokens.fontFamilyBase,
     fontSize: tokens.fontSizeBase200,
     fontWeight: tokens.fontWeightBold,
   },
-  podiumAvatar: {
-    position: "relative",
+  // The white "app icon" tile the reference nests its illustration in — the team avatar sits
+  // inside it instead, so the composition carries over without inventing new iconography.
+  iconTile: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    width: "58px",
-    height: "58px",
-    marginBottom: tokens.spacingVerticalXS,
+    width: "72px",
+    height: "72px",
+    marginBottom: tokens.spacingVerticalS,
+    borderRadius: tokens.borderRadiusXLarge,
+    backgroundColor: "rgba(255, 255, 255, 0.85)",
+    boxShadow: tokens.shadow8,
+  },
+  podiumAvatar: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "52px",
+    height: "52px",
     borderRadius: tokens.borderRadiusCircular,
     backgroundColor: tokens.colorBrandBackground,
     color: "#ffffff",
     fontFamily: tokens.fontFamilyBase,
     fontSize: tokens.fontSizeBase400,
     fontWeight: tokens.fontWeightBold,
-    // The medal "halo" — a ring in the tier colour, one visual step lighter than the rank badge
-    // so the two read as the same medal rather than competing for attention.
-    boxShadow: "0 0 0 3px var(--tier-wash), 0 0 0 5px var(--tier-accent)",
   },
   podiumName: {
     margin: 0,
@@ -144,18 +161,20 @@ const useStyles = makeStyles({
     color: "var(--tier-accent)",
     fontVariantNumeric: "tabular-nums",
   },
+  // The reference's solid, pill-shaped "Continue >" button, repurposed as the medal call-out —
+  // same shape and weight, carrying the tier label and a trailing chevron instead of an action.
   tierTag: {
     display: "inline-flex",
     alignItems: "center",
     gap: tokens.spacingHorizontalXXS,
-    marginTop: tokens.spacingVerticalXXS,
-    padding: `2px ${tokens.spacingHorizontalSNudge}`,
+    marginTop: tokens.spacingVerticalS,
+    padding: `${tokens.spacingVerticalSNudge} ${tokens.spacingHorizontalM}`,
     borderRadius: tokens.borderRadiusCircular,
-    backgroundColor: "var(--tier-wash)",
+    backgroundColor: "var(--tier-accent)",
     fontFamily: tokens.fontFamilyBase,
-    fontSize: tokens.fontSizeBase100,
+    fontSize: tokens.fontSizeBase200,
     fontWeight: tokens.fontWeightSemibold,
-    color: "var(--tier-accent)",
+    color: "#ffffff",
   },
   tableCard: {
     padding: 0,
@@ -275,14 +294,17 @@ function PodiumCard({ entry, place }: { entry: LeaderboardEntry; place: PodiumPl
   return (
     <div className={mergeClasses(styles.podiumCard, isFirst && styles.podiumCardFirst)} style={tierVars}>
       <span className={styles.rankBadge}>{entry.rank}</span>
-      <span className={styles.podiumAvatar} aria-hidden="true">
-        {entry.initials}
+      <span className={styles.iconTile}>
+        <span className={styles.podiumAvatar} aria-hidden="true">
+          {entry.initials}
+        </span>
       </span>
       <h2 className={styles.podiumName}>{entry.name}</h2>
       <p className={styles.podiumOrg}>{entry.org}</p>
       <strong className={styles.podiumPoints}>{entry.points.toLocaleString()} pts</strong>
       <span className={styles.tierTag}>
         <TierIcon /> {tier.label}
+        <ChevronRight12Filled />
       </span>
     </div>
   );
