@@ -69,11 +69,10 @@ const useStyles = makeStyles({
     },
   },
   /**
-   * One continuous soft surface, not a hard-edged colour block sitting on white — two blurred
-   * colour pools near the top corners that dissolve into the card's own surface colour by the
-   * lower third. The surface is `colorNeutralBackground1`, not a literal white, specifically so
-   * this fades into a dark card in dark theme instead of always resolving to a white slab sitting
-   * on a dark page. The tier wash/accent are set inline per card (see PODIUM_TIERS).
+   * A plain card surface with one gentle glow behind the icon tile — not a colour zone. The
+   * previous two overlapping full-strength pools read as a coloured block; this is a single soft
+   * blob, low-opacity and tightly contained, so the card reads as "dark card, faint accent hint"
+   * rather than "colourful card". `colorNeutralBackground1` keeps the base itself theme-correct.
    */
   podiumCard: {
     position: "relative",
@@ -87,8 +86,7 @@ const useStyles = makeStyles({
     boxShadow: tokens.shadow8,
     backgroundColor: tokens.colorNeutralBackground1,
     backgroundImage:
-      "radial-gradient(120% 65% at 15% -10%, var(--tier-wash) 0%, transparent 60%), " +
-      "radial-gradient(100% 60% at 100% 0%, color-mix(in srgb, var(--tier-wash) 55%, var(--tier-accent)) 0%, transparent 55%)",
+      "radial-gradient(60% 45% at 22% 8%, color-mix(in srgb, var(--tier-wash) 55%, transparent) 0%, transparent 72%)",
     padding: `${tokens.spacingVerticalXL} ${tokens.spacingHorizontalM} ${tokens.spacingVerticalL}`,
     textAlign: "center",
     minHeight: "228px",
