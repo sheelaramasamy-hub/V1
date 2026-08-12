@@ -13,6 +13,7 @@ import {
 import { PageBanner, PageBannerButton } from "../components/shared/PageBanner";
 import { SurfaceCard } from "../components/shared/SurfaceCard";
 import { leaderboardEntries, yourTeamRank, type LeaderboardEntry } from "../data/leaderboard";
+import { useAppTheme } from "../theme/theme-context";
 
 type PodiumPlace = "first" | "second" | "third";
 
@@ -69,9 +70,10 @@ const useStyles = makeStyles({
   },
   /**
    * One continuous soft surface, not a hard-edged colour block sitting on white — two blurred
-   * colour pools near the top corners that dissolve into white by the lower third. That diffuse
-   * fade is what makes the reference read as "airy"; a crisp band with a seam is what didn't.
-   * The tier wash/accent are set inline per card (see PODIUM_TIERS).
+   * colour pools near the top corners that dissolve into the card's own surface colour by the
+   * lower third. The surface is `colorNeutralBackground1`, not a literal white, specifically so
+   * this fades into a dark card in dark theme instead of always resolving to a white slab sitting
+   * on a dark page. The tier wash/accent are set inline per card (see PODIUM_TIERS).
    */
   podiumCard: {
     position: "relative",
@@ -83,7 +85,7 @@ const useStyles = makeStyles({
     borderRadius: "20px",
     border: `${tokens.strokeWidthThin} solid var(--tier-border)`,
     boxShadow: tokens.shadow8,
-    backgroundColor: "#ffffff",
+    backgroundColor: tokens.colorNeutralBackground1,
     backgroundImage:
       "radial-gradient(120% 65% at 15% -10%, var(--tier-wash) 0%, transparent 60%), " +
       "radial-gradient(100% 60% at 100% 0%, color-mix(in srgb, var(--tier-wash) 55%, var(--tier-accent)) 0%, transparent 55%)",
@@ -106,15 +108,16 @@ const useStyles = makeStyles({
     width: "26px",
     height: "26px",
     borderRadius: tokens.borderRadiusCircular,
-    backgroundColor: "#ffffff",
-    color: "var(--tier-accent)",
+    backgroundColor: tokens.colorNeutralBackground1,
+    color: "var(--tier-text)",
     boxShadow: tokens.shadow4,
     fontFamily: tokens.fontFamilyBase,
     fontSize: tokens.fontSizeBase200,
     fontWeight: tokens.fontWeightBold,
   },
-  // The white "app icon" tile the reference nests its illustration in — the team avatar sits
-  // inside it instead, so the composition carries over without inventing new iconography.
+  // The reference's white "app icon" tile the illustration sits in — the team avatar sits inside
+  // it instead. Uses the same card-surface token as the card itself (not a literal white), so it
+  // reads as a raised chip on the surface in both themes rather than a fixed white patch.
   iconTile: {
     display: "flex",
     alignItems: "center",
@@ -123,7 +126,7 @@ const useStyles = makeStyles({
     height: "72px",
     marginBottom: tokens.spacingVerticalS,
     borderRadius: tokens.borderRadiusXLarge,
-    backgroundColor: "rgba(255, 255, 255, 0.85)",
+    backgroundColor: tokens.colorNeutralBackground1,
     boxShadow: tokens.shadow8,
   },
   podiumAvatar: {
@@ -158,7 +161,7 @@ const useStyles = makeStyles({
     fontFamily: tokens.fontFamilyBase,
     fontSize: tokens.fontSizeBase500,
     fontWeight: tokens.fontWeightBold,
-    color: "var(--tier-accent)",
+    color: "var(--tier-text)",
     fontVariantNumeric: "tabular-nums",
   },
   // The reference's solid, pill-shaped "Continue >" button, repurposed as the medal call-out —
@@ -281,6 +284,7 @@ const useStyles = makeStyles({
 
 function PodiumCard({ entry, place }: { entry: LeaderboardEntry; place: PodiumPlace }) {
   const styles = useStyles();
+  const { colorScheme } = useAppTheme();
   const isFirst = place === "first";
   const tier = PODIUM_TIERS[place];
   const TierIcon = tier.icon;
@@ -289,6 +293,11 @@ function PodiumCard({ entry, place }: { entry: LeaderboardEntry; place: PodiumPl
     "--tier-wash": tier.wash,
     "--tier-border": tier.border,
     "--tier-accent": tier.accent,
+    // Fluent's fixed palette Foreground2 tokens are tuned for text on a light neutral surface;
+    // on the card's own dark surface in dark theme, that mid-tone gold/silver/bronze reads too
+    // muddy. Blending toward white only in dark theme keeps the same hue but restores contrast.
+    "--tier-text":
+      colorScheme === "dark" ? `color-mix(in srgb, ${tier.accent} 55%, white)` : tier.accent,
   } as CSSProperties;
 
   return (
