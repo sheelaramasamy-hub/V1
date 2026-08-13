@@ -1,9 +1,11 @@
 import { useMemo, useState } from "react";
-import { Body1, Button, ProgressBar, Title2, makeStyles, tokens } from "@fluentui/react-components";
+import { useNavigate } from "react-router-dom";
+import { Button, ProgressBar, makeStyles, tokens } from "@fluentui/react-components";
 import { ArrowRight16Regular, Bookmark20Regular } from "@fluentui/react-icons";
 import { ResourceCard } from "../components/resources/ResourceCard";
 import { CardGrid } from "../components/shared/CardGrid";
 import { FilterBar, type FilterDefinition } from "../components/shared/FilterBar";
+import { PageBanner, PageBannerButton } from "../components/shared/PageBanner";
 import { PageTransition } from "../components/shared/PageTransition";
 import { EmptyWorkshopsIllustration } from "../components/shared/illustrations/EmptyWorkshopsIllustration";
 import { RESOURCE_CATEGORY_FILTERS, featuredResource, resources } from "../data/resources";
@@ -13,35 +15,6 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     gap: tokens.spacingVerticalL,
-  },
-  header: {
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "flex-end",
-    justifyContent: "space-between",
-    gap: tokens.spacingHorizontalL,
-  },
-  headerCopy: {
-    display: "flex",
-    flexDirection: "column",
-    gap: tokens.spacingVerticalXXS,
-    maxWidth: "68ch",
-  },
-  eyebrow: {
-    fontFamily: tokens.fontFamilyBase,
-    fontSize: tokens.fontSizeBase200,
-    lineHeight: tokens.lineHeightBase200,
-    fontWeight: tokens.fontWeightSemibold,
-    color: tokens.colorNeutralForeground3,
-    textTransform: "uppercase",
-    letterSpacing: "0.04em",
-  },
-  title: {
-    margin: 0,
-  },
-  description: {
-    margin: 0,
-    color: tokens.colorNeutralForeground2,
   },
   callout: {
     display: "grid",
@@ -173,6 +146,7 @@ const EMPTY_QUERY: ResourceQuery = { search: "", categories: [] };
  */
 export function ResourcesPage() {
   const styles = useStyles();
+  const navigate = useNavigate();
   const [query, setQuery] = useState<ResourceQuery>(EMPTY_QUERY);
 
   const results = useMemo(() => {
@@ -204,20 +178,12 @@ export function ResourcesPage() {
 
   return (
     <div className={styles.root}>
-      <header className={styles.header}>
-        <div className={styles.headerCopy}>
-          <span className={styles.eyebrow}>Learning library</span>
-          <Title2 as="h1" className={styles.title}>
-            Build skills at your pace
-          </Title2>
-          <Body1 as="p" className={styles.description}>
-            Curated Microsoft Learn paths, labs, templates, and expert recordings for your active challenges.
-          </Body1>
-        </div>
-        <Button appearance="secondary" icon={<Bookmark20Regular />}>
-          Saved resources
-        </Button>
-      </header>
+      <PageBanner
+        eyebrow="Learning library"
+        title="Build skills at your pace"
+        description="Curated Microsoft Learn paths, labs, templates, and expert recordings for your active challenges."
+        actions={<PageBannerButton icon={<Bookmark20Regular />}>Saved resources</PageBannerButton>}
+      />
 
       <div className={styles.callout}>
         <span className={styles.calloutMark}>
@@ -235,7 +201,12 @@ export function ResourcesPage() {
             <span className={styles.calloutProgressLabel}>{featuredResource.moduleLabel}</span>
             <ProgressBar value={featuredResource.progress / 100} thickness="medium" shape="rounded" />
           </div>
-          <Button appearance="primary" icon={<ArrowRight16Regular />} iconPosition="after">
+          <Button
+            appearance="primary"
+            icon={<ArrowRight16Regular />}
+            iconPosition="after"
+            onClick={() => navigate(`/resources/${featuredResource.id}`)}
+          >
             {featuredResource.actionLabel}
           </Button>
         </div>

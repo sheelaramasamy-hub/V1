@@ -4,6 +4,7 @@ import { HomePage } from "../pages/HomePage";
 import { AllTracksPage } from "../pages/AllTracksPage";
 import { TrackDetailPage } from "../pages/TrackDetailPage";
 import { ResourcesPage } from "../pages/ResourcesPage";
+import { ResourceDetailPage } from "../pages/ResourceDetailPage";
 import { LeaderboardPage } from "../pages/LeaderboardPage";
 import { WorkshopsPage } from "../pages/WorkshopsPage";
 import { FeedbackPage } from "../pages/FeedbackPage";
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/tracks" element={<AllTracksPage />} />
         <Route path="/tracks/:id" element={<TrackDetailPage />} />
         <Route path="/resources" element={<ResourcesPage />} />
+        <Route path="/resources/:id" element={<ResourceDetailPage />} />
         <Route path="/leaderboard" element={<LeaderboardPage />} />
         <Route path="/workshop" element={<WorkshopsPage />} />
         <Route path="/feedback" element={<FeedbackPage />} />
