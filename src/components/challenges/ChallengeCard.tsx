@@ -180,7 +180,9 @@ const useStyles = makeStyles({
 export function ChallengeCard({ challenge }: { challenge: Challenge }) {
   const styles = useStyles();
   const navigate = useNavigate();
-  const goToDetail = (): void => navigate(`/tracks/${challenge.id}`);
+  const goToDetail = (): void => {
+    void navigate("/tracks/" + challenge.id);
+  };
 
   return (
     <SurfaceCard as="section" className={styles.card} aria-labelledby={`challenge-${challenge.id}`}>
@@ -249,7 +251,4 @@ export function ChallengeCard({ challenge }: { challenge: Challenge }) {
     </SurfaceCard>
   );
 }
-
-
-
 
