@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, makeStyles, mergeClasses, tokens } from "@fluentui/react-components";
 import { ArrowRight16Regular, ChevronDown12Regular } from "@fluentui/react-icons";
 import { aboutHackathon, prerequisites } from "../../data/about";
@@ -134,6 +135,7 @@ const useStyles = makeStyles({
 
 export function AboutHackathonSection() {
   const styles = useStyles();
+  const navigate = useNavigate();
   const [prerequisitesExpanded, setPrerequisitesExpanded] = useState(false);
 
   return (
@@ -146,7 +148,12 @@ export function AboutHackathonSection() {
           <p className={styles.description}>{aboutHackathon.description}</p>
 
           <div className={styles.introActions}>
-            <Button appearance="primary" icon={<ArrowRight16Regular />} iconPosition="after">
+            <Button
+              appearance="primary"
+              icon={<ArrowRight16Regular />}
+              iconPosition="after"
+              onClick={() => navigate("/tracks")}
+            >
               {aboutHackathon.primaryAction}
             </Button>
             <Button

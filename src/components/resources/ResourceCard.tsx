@@ -1,10 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Badge, Button, ProgressBar, makeStyles, tokens } from "@fluentui/react-components";
+import { Badge, Button, ProgressBar, makeStyles, mergeClasses, tokens } from "@fluentui/react-components";
 import type { BadgeProps } from "@fluentui/react-components";
-import { ArrowClockwise16Regular, ArrowDownload16Regular, ArrowRight16Regular, Clock12Regular } from "@fluentui/react-icons";
+import {
+  ArrowClockwise16Regular,
+  ArrowDownload16Regular,
+  ArrowRight16Regular,
+  Bookmark20Filled,
+  Bookmark20Regular,
+  Clock12Regular,
+} from "@fluentui/react-icons";
 import type { Resource } from "../../types/resources";
+import { useSavedResources } from "../../hooks/useSavedResources";
 import { SurfaceCard } from "../shared/SurfaceCard";
-import { liftOnHover } from "../../theme/motion";
+import { liftOnHover, motion, transitionFor } from "../../theme/motion";
 
 const useStyles = makeStyles({
   /** Same 8px cover gutter as ChallengeCard and WorkshopCard, so every catalogue card in the
@@ -40,10 +48,38 @@ const useStyles = makeStyles({
     top: tokens.spacingVerticalMNudge,
     left: tokens.spacingHorizontalMNudge,
   },
-  levelBadge: {
+  cornerActions: {
     position: "absolute",
     top: tokens.spacingVerticalMNudge,
     right: tokens.spacingHorizontalMNudge,
+    display: "flex",
+    alignItems: "center",
+    gap: tokens.spacingHorizontalXS,
+  },
+  bookmarkButton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "28px",
+    height: "28px",
+    flexShrink: 0,
+    borderRadius: tokens.borderRadiusCircular,
+    border: "none",
+    cursor: "pointer",
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    color: tokens.colorNeutralForeground2,
+    ...transitionFor("background-color, color, transform", motion.feedback),
+    ":hover": {
+      backgroundColor: "#ffffff",
+      transform: "scale(1.05)",
+    },
+    ":focus-visible": {
+      outline: `${tokens.strokeWidthThick} solid ${tokens.colorStrokeFocus2}`,
+      outlineOffset: "1px",
+    },
+  },
+  bookmarkButtonSaved: {
+    color: tokens.colorBrandForeground1,
   },
   /** Horizontal padding is 0 — the card's own 8px gutter already lines this content up with the
       cover's left/right edges, so text, progress bar, and link all span the same width as the
@@ -167,9 +203,11 @@ function actionIconFor(resource: Resource) {
 export function ResourceCard({ resource }: { resource: Resource }) {
   const styles = useStyles();
   const navigate = useNavigate();
+  const { isSaved, toggleSaved } = useSavedResources();
   const status = statusFor(resource.progress);
   const ActionIcon = actionIconFor(resource);
   const headingId = `resource-${resource.id}`;
+  const saved = isSaved(resource.id);
 
   return (
     <SurfaceCard as="section" className={styles.card} aria-labelledby={headingId}>
@@ -187,9 +225,20 @@ export function ResourceCard({ resource }: { resource: Resource }) {
             {STATUS_LABEL[status]}
           </Badge>
         )}
-        <Badge className={styles.levelBadge} appearance="filled" color="subtle" size="large" shape="rounded">
-          {resource.level}
-        </Badge>
+        <div className={styles.cornerActions}>
+          <button
+            type="button"
+            className={mergeClasses(styles.bookmarkButton, saved && styles.bookmarkButtonSaved)}
+            onClick={() => toggleSaved(resource.id)}
+            aria-pressed={saved}
+            aria-label={saved ? `Remove ${resource.title} from saved resources` : `Save ${resource.title}`}
+          >
+            {saved ? <Bookmark20Filled /> : <Bookmark20Regular />}
+          </button>
+          <Badge appearance="filled" color="subtle" size="large" shape="rounded">
+            {resource.level}
+          </Badge>
+        </div>
       </div>
 
       <div className={styles.body}>

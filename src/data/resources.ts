@@ -5,6 +5,8 @@ import resourceSunriseArcs from "../assets/images/resource-sunrise-arcs.png";
 import resourceVioletFolds from "../assets/images/resource-violet-folds.png";
 import resourcePurpleSculpture from "../assets/images/resource-purple-sculpture.png";
 import resourceFabricMark from "../assets/images/resource-fabric-mark.png";
+import coverTwo from "../assets/images/challenge-cover-2.png";
+import coverThree from "../assets/images/challenge-cover-3.png";
 import type { FeaturedResource, Resource } from "../types/resources";
 
 export const featuredResource: FeaturedResource = {
@@ -114,6 +116,38 @@ export const resources: Resource[] = [
       "Structure a 3-minute technical demo narrative",
       "Lead with impact, not implementation detail",
       "Handle judge questions without losing the thread",
+    ],
+  },
+  {
+    id: "power-platform-apps",
+    category: "Learning path",
+    title: "Build apps with Power Platform",
+    description: "Compose a Power Apps and Power Automate solution without writing infrastructure code.",
+    meta: "35 min · 4 modules",
+    level: "Beginner",
+    progress: 0,
+    cover: coverTwo,
+    actionLabel: "Start learning",
+    points: [
+      "Build a canvas app bound to real data",
+      "Automate an approval flow with Power Automate",
+      "Share the app securely with your team",
+    ],
+  },
+  {
+    id: "copilot-studio-agents",
+    category: "Learning path",
+    title: "Design agents in Copilot Studio",
+    description: "Design, test, and publish a custom Copilot Studio agent end to end.",
+    meta: "50 min · 5 modules",
+    level: "Intermediate",
+    progress: 0,
+    cover: coverThree,
+    actionLabel: "Start learning",
+    points: [
+      "Design a topic and trigger structure for an agent",
+      "Ground responses in your own knowledge sources",
+      "Test and publish the agent to a channel",
     ],
   },
 ];

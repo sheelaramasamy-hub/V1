@@ -14,6 +14,7 @@ export const recommendedItems: RecommendedItem[] = [
     durationMinutes: 45,
     title: "Secure your AI apps on Azure",
     actionLabel: "Start learning",
+    resourceId: "secure-ai-apps-azure",
   },
   {
     id: "fabric-analytics-foundations",
@@ -22,6 +23,7 @@ export const recommendedItems: RecommendedItem[] = [
     title: "Analyze data with Microsoft Fabric",
     actionLabel: "Start learning",
     thumbnail: coverOne,
+    resourceId: "build-with-fabric",
   },
   {
     id: "power-platform-apps",
@@ -30,6 +32,7 @@ export const recommendedItems: RecommendedItem[] = [
     title: "Build apps with Power Platform",
     actionLabel: "Start learning",
     thumbnail: coverTwo,
+    resourceId: "power-platform-apps",
   },
   {
     id: "copilot-studio-agents",
@@ -38,5 +41,6 @@ export const recommendedItems: RecommendedItem[] = [
     title: "Design agents in Copilot Studio",
     actionLabel: "Start learning",
     thumbnail: coverThree,
+    resourceId: "copilot-studio-agents",
   },
 ];

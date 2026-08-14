@@ -182,7 +182,11 @@ export function ResourcesPage() {
         eyebrow="Learning library"
         title="Build skills at your pace"
         description="Curated Microsoft Learn paths, labs, templates, and expert recordings for your active challenges."
-        actions={<PageBannerButton icon={<Bookmark20Regular />}>Saved resources</PageBannerButton>}
+        actions={
+          <PageBannerButton icon={<Bookmark20Regular />} onClick={() => navigate("/resources/saved")}>
+            Saved resources
+          </PageBannerButton>
+        }
       />
 
       <div className={styles.callout}>

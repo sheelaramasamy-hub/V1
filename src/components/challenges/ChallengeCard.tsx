@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Badge, Button, makeStyles, tokens } from "@fluentui/react-components";
 import { ChevronRight16Regular } from "@fluentui/react-icons";
 import symbolMicrosoft from "../../assets/images/symbol-microsoft.svg";
@@ -179,6 +179,8 @@ const useStyles = makeStyles({
 
 export function ChallengeCard({ challenge }: { challenge: Challenge }) {
   const styles = useStyles();
+  const navigate = useNavigate();
+  const goToDetail = (): void => navigate(`/tracks/${challenge.id}`);
 
   return (
     <SurfaceCard as="section" className={styles.card} aria-labelledby={`challenge-${challenge.id}`}>
@@ -229,10 +231,19 @@ export function ChallengeCard({ challenge }: { challenge: Challenge }) {
         </div>
 
         <div className={styles.footer}>
-          <Button className={styles.learnMoreButton} appearance="subtle" icon={<ChevronRight16Regular />} iconPosition="before">
+          <Button
+            className={styles.learnMoreButton}
+            appearance="subtle"
+            icon={<ChevronRight16Regular />}
+            iconPosition="before"
+            disabled={!challenge.detail}
+            onClick={goToDetail}
+          >
             Learn More
           </Button>
-          <Button className={styles.enrollButton} appearance="primary">{challenge.ctaLabel}</Button>
+          <Button className={styles.enrollButton} appearance="primary" disabled={!challenge.detail} onClick={goToDetail}>
+            {challenge.ctaLabel}
+          </Button>
         </div>
       </div>
     </SurfaceCard>

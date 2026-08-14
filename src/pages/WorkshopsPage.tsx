@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, MessageBar, MessageBarBody, MessageBarTitle, makeStyles, tokens } from "@fluentui/react-components";
 import { ArrowDownload20Regular } from "@fluentui/react-icons";
 import { CardGrid } from "../components/shared/CardGrid";
@@ -59,7 +60,9 @@ const EMPTY_QUERY: WorkshopQuery = { search: "", categories: [] };
  */
 export function WorkshopsPage() {
   const styles = useStyles();
+  const navigate = useNavigate();
   const [query, setQuery] = useState<WorkshopQuery>(EMPTY_QUERY);
+  const [calendarSent, setCalendarSent] = useState(false);
 
   const liveWorkshop = workshops.find((workshop) => workshop.status === "Live now");
 
@@ -96,8 +99,21 @@ export function WorkshopsPage() {
         eyebrow="Expert-led learning"
         title="Workshops"
         description="Join live sessions, reserve upcoming clinics, or watch recordings when it suits you."
-        actions={<PageBannerButton icon={<ArrowDownload20Regular />}>Download calendar</PageBannerButton>}
+        actions={
+          <PageBannerButton icon={<ArrowDownload20Regular />} onClick={() => setCalendarSent(true)}>
+            Download calendar
+          </PageBannerButton>
+        }
       />
+
+      {calendarSent ? (
+        <MessageBar intent="success">
+          <MessageBarBody>
+            <MessageBarTitle>Calendar invite sent.</MessageBarTitle>
+            Check your inbox for an .ics file covering every session on this page.
+          </MessageBarBody>
+        </MessageBar>
+      ) : null}
 
       {liveWorkshop ? (
         <MessageBar intent="info">
@@ -105,7 +121,7 @@ export function WorkshopsPage() {
             <MessageBarTitle>{liveWorkshop.title} is live now</MessageBarTitle>
             {liveWorkshop.presenterName} is presenting — join before the session ends.
           </MessageBarBody>
-          <Button appearance="primary" size="small">
+          <Button appearance="primary" size="small" onClick={() => navigate(`/workshop/${liveWorkshop.id}`)}>
             Join live
           </Button>
         </MessageBar>

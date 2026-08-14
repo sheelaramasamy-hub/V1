@@ -8,4 +8,6 @@ export interface RecommendedItem {
   actionLabel: string;
   /** Optional thumbnail override. The first reference item keeps the default Learn artwork. */
   thumbnail?: string;
+  /** Resource id this recommendation opens in the learning library. */
+  resourceId: string;
 }

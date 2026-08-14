@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
   Avatar,
   Button,
@@ -181,6 +182,7 @@ const useStyles = makeStyles({
 
 export function TopBar({ onOpenAssistant }: { onOpenAssistant: () => void }) {
   const styles = useStyles();
+  const navigate = useNavigate();
   const { colorSchemePreference, setColorSchemePreference } = useAppTheme();
 
   return (
@@ -247,8 +249,8 @@ export function TopBar({ onOpenAssistant }: { onOpenAssistant: () => void }) {
             </MenuTrigger>
             <MenuPopover>
               <MenuList>
-                <MenuItem>My profile</MenuItem>
-                <MenuItem>Settings</MenuItem>
+                <MenuItem onClick={() => navigate("/profile")}>My profile</MenuItem>
+                <MenuItem onClick={() => navigate("/settings")}>Settings</MenuItem>
                 <MenuDivider />
                 <MenuGroup>
                   <MenuGroupHeader>Appearance</MenuGroupHeader>

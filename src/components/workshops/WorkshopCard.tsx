@@ -1,3 +1,4 @@
+import { Link, useNavigate } from "react-router-dom";
 import { Badge, Button, makeStyles, tokens } from "@fluentui/react-components";
 import type { BadgeProps } from "@fluentui/react-components";
 import { CalendarLtr16Regular } from "@fluentui/react-icons";
@@ -130,10 +131,22 @@ const useStyles = makeStyles({
     width: "100%",
     justifyContent: "center",
   },
+  titleLink: {
+    color: "inherit",
+    textDecorationLine: "none",
+    ":hover": {
+      textDecorationLine: "underline",
+    },
+    ":focus-visible": {
+      outline: `${tokens.strokeWidthThick} solid ${tokens.colorStrokeFocus2}`,
+      outlineOffset: tokens.spacingHorizontalXXS,
+    },
+  },
 });
 
 export function WorkshopCard({ workshop }: { workshop: Workshop }) {
   const styles = useStyles();
+  const navigate = useNavigate();
 
   return (
     <SurfaceCard as="section" className={styles.card} aria-labelledby={`workshop-${workshop.id}`}>
@@ -156,7 +169,9 @@ export function WorkshopCard({ workshop }: { workshop: Workshop }) {
           <span className={styles.category}>{workshop.category}</span>
 
           <h3 id={`workshop-${workshop.id}`} className={styles.title}>
-            {workshop.title}
+            <Link to={`/workshop/${workshop.id}`} className={styles.titleLink}>
+              {workshop.title}
+            </Link>
           </h3>
 
           <div className={styles.presenterRow}>
@@ -179,6 +194,7 @@ export function WorkshopCard({ workshop }: { workshop: Workshop }) {
           className={styles.footer}
           appearance={workshop.status === "Live now" ? "primary" : "secondary"}
           size="large"
+          onClick={() => navigate(`/workshop/${workshop.id}`)}
         >
           {workshop.actionLabel}
         </Button>

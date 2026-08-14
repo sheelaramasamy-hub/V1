@@ -10,4 +10,8 @@ export interface Workshop {
   date: string;
   actionLabel: string;
   cover: string;
+  /** Detail page intro paragraph. */
+  description: string;
+  /** Detail page "What to expect" checklist. */
+  agenda: string[];
 }

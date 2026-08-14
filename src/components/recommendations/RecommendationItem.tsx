@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { makeStyles, tokens } from "@fluentui/react-components";
 import { ArrowRight12Regular } from "@fluentui/react-icons";
 import learnThumbnail from "../../assets/images/learn-thumbnail.png";
@@ -97,6 +98,7 @@ const useStyles = makeStyles({
 
 export function RecommendationItem({ item }: { item: RecommendedItem }) {
   const styles = useStyles();
+  const navigate = useNavigate();
   const thumbnail = item.thumbnail ?? learnThumbnail;
 
   return (
@@ -113,7 +115,11 @@ export function RecommendationItem({ item }: { item: RecommendedItem }) {
           </p>
           <h3 className={styles.title}>{item.title}</h3>
         </div>
-        <button type="button" className={styles.action}>
+        <button
+          type="button"
+          className={styles.action}
+          onClick={() => navigate(`/resources/${item.resourceId}`)}
+        >
           {item.actionLabel}
           <ArrowRight12Regular />
         </button>

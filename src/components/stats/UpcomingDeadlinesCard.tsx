@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Link, makeStyles, mergeClasses, tokens } from "@fluentui/react-components";
 import { upcomingDeadlines } from "../../data/stats";
 import { SurfaceCard } from "../shared/SurfaceCard";
@@ -93,12 +94,15 @@ const useStyles = makeStyles({
 
 export function UpcomingDeadlinesCard() {
   const styles = useStyles();
+  const navigate = useNavigate();
 
   return (
     <SurfaceCard className={styles.card}>
       <div className={styles.header}>
         <h2 className={styles.titleHeading}>Upcoming deadlines</h2>
-        <Link href="#">View all</Link>
+        <Link as="button" onClick={() => navigate("/tracks")}>
+          View all
+        </Link>
       </div>
 
       <ul className={styles.list}>

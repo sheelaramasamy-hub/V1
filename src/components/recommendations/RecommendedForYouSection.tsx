@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Link, makeStyles, tokens } from "@fluentui/react-components";
 import { recommendedItems } from "../../data/recommendations";
 import { SurfaceCard } from "../shared/SurfaceCard";
@@ -44,6 +45,7 @@ const useStyles = makeStyles({
 
 export function RecommendedForYouSection() {
   const styles = useStyles();
+  const navigate = useNavigate();
 
   return (
     <SurfaceCard as="section" elevation="high" className={styles.card} aria-labelledby="recommended-heading">
@@ -51,7 +53,7 @@ export function RecommendedForYouSection() {
         <h2 id="recommended-heading" className={styles.heading}>
           Recommended for you
         </h2>
-        <Link href="#" className={styles.headerLink}>
+        <Link as="button" className={styles.headerLink} onClick={() => navigate("/resources")}>
           Learning path
         </Link>
       </div>
